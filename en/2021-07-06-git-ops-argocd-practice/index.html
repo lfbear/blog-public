@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="BackgroundThis article aims to introduce a viable implementation of GitOps through a practical case study based on GitLab and ArgoCD. This setup is ideal for teams looking for a lightweight, rapid con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Practicing GitOps: An ArgoCD and GitLab CI&#x2F;CD Tutorial">
+<meta property="og:url" content="https://lfbear.com/en/2021-07-06-git-ops-argocd-practice/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="BackgroundThis article aims to introduce a viable implementation of GitOps through a practical case study based on GitLab and ArgoCD. This setup is ideal for teams looking for a lightweight, rapid con">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://lfbear.com/assets/images/gitops-argocd.png">
+<meta property="article:published_time" content="2021-07-06T07:48:58.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.732Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="Argo">
+<meta property="article:tag" content="CD">
+<meta property="article:tag" content="CI">
+<meta property="article:tag" content="GitLab">
+<meta property="article:tag" content="Kustomize">
+<meta property="article:tag" content="primary">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lfbear.com/assets/images/gitops-argocd.png">
+
+
+<link rel="canonical" href="https://lfbear.com/en/2021-07-06-git-ops-argocd-practice/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://lfbear.com/en/2021-07-06-git-ops-argocd-practice/","path":"en/2021-07-06-git-ops-argocd-practice/","title":"Practicing GitOps: An ArgoCD and GitLab CI/CD Tutorial"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Practicing GitOps: An ArgoCD and GitLab CI/CD Tutorial | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Cub's Lair</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about">
+
+    <a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <a class="lang-item" href="/2021-07-06-git-ops-argocd-practice/">简体中文</a>
+       <span class="lang-separator">|</span> 
+      
+        <span class="lang-item active">English</span>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-Concepts"><span class="nav-number">2.</span> <span class="nav-text">Core Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Core-Components"><span class="nav-number">2.1.</span> <span class="nav-text">Core Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CI-Continuous-Integration"><span class="nav-number">2.2.</span> <span class="nav-text">CI (Continuous Integration)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CD-Continuous-Delivery"><span class="nav-number">2.3.</span> <span class="nav-text">CD (Continuous Delivery)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture-Workflow"><span class="nav-number">3.</span> <span class="nav-text">Architecture &amp; Workflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CI-Phase-%E2%80%94-Deliverable-Docker-Image"><span class="nav-number">3.1.</span> <span class="nav-text">CI Phase — Deliverable: Docker Image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#User-Story"><span class="nav-number">3.1.1.</span> <span class="nav-text">User Story</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gitlab-ci-yml"><span class="nav-number">3.1.2.</span> <span class="nav-text">.gitlab-ci.yml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GitLab-Runner"><span class="nav-number">3.1.3.</span> <span class="nav-text">GitLab Runner</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CD-Phase-%E2%80%94-Key-Word-Kustomize"><span class="nav-number">3.2.</span> <span class="nav-text">CD Phase — Key Word: Kustomize</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kustomize"><span class="nav-number">3.2.1.</span> <span class="nav-text">Kustomize</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArgoCD"><span class="nav-number">3.2.2.</span> <span class="nav-text">ArgoCD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Section-Summary"><span class="nav-number">3.2.3.</span> <span class="nav-text">Section Summary</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update-2021-10-15"><span class="nav-number">3.3.</span> <span class="nav-text">Update (2021-10-15)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/en/2021-07-06-git-ops-argocd-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Practicing GitOps: An ArgoCD and GitLab CI/CD Tutorial | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Practicing GitOps: An ArgoCD and GitLab CI/CD Tutorial
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-06 15:48:58" itemprop="dateCreated datePublished" datetime="2021-07-06T15:48:58+08:00">2021-07-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>This article aims to introduce a viable implementation of GitOps through a practical case study based on GitLab and ArgoCD.</p>
+<p>This setup is ideal for teams looking for a lightweight, rapid container deployment workflow. If you are seeking a fast and simple deployment method for projects running in Kubernetes (K8s), GitOps is an excellent choice. </p>
+<p>Typically, our source code is managed by version control systems (VCS) like GitLab. In recent years, as GitLab’s built-in CI has become increasingly robust and user-friendly, GitOps has become much easier to adopt.</p>
+<span id="more"></span>
+
+<h2 id="Core-Concepts"><a href="#Core-Concepts" class="headerlink" title="Core Concepts"></a>Core Concepts</h2><h3 id="Core-Components"><a href="#Core-Components" class="headerlink" title="Core Components"></a>Core Components</h3><ul>
+<li><strong>CI (Continuous Integration)</strong>: Implemented via <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/pipelines/">GitLab pipelines</a>.</li>
+<li><strong>CD (Continuous Delivery)</strong>: Implemented via <a target="_blank" rel="noopener" href="https://argoproj.github.io/argo-cd/">ArgoCD</a>.</li>
+<li><strong>Artifact</strong>: Often referred to as the build artifact (e.g., Docker image), which acts as the glue linking the independent CI and CD phases together.</li>
+</ul>
+<p><em>*Note: In this article, CI and CD are used in a narrow sense, representing “build” and “deploy” respectively.*</em></p>
+<h3 id="CI-Continuous-Integration"><a href="#CI-Continuous-Integration" class="headerlink" title="CI (Continuous Integration)"></a>CI (Continuous Integration)</h3><p><strong>The Core:</strong> In GitLab, we use a <code>.gitlab-ci.yml</code> file to define our CI Pipeline. Beyond routine code linting and unit testing, its primary responsibility is compiling the project and packaging it. While it is technically possible to perform deployments directly inside the GitLab CI pipeline, we will discuss later why this is generally not recommended.</p>
+<h3 id="CD-Continuous-Delivery"><a href="#CD-Continuous-Delivery" class="headerlink" title="CD (Continuous Delivery)"></a>CD (Continuous Delivery)</h3><p>This phase consists of two main pillars:</p>
+<ol>
+<li><strong>The Artifact</strong>: The compiled output of the project, most commonly a binary, package, or container image.</li>
+<li><strong>Deployment Instructions</strong>: Guidelines on how the artifact should be deployed—for instance, which directories it resides in, and how to start the service. Because deployment instructions can get highly complex (involving sequential steps, health checks, etc.), it is usually delegated to a dedicated system. Unless your deployment is extremely trivial, using GitLab CI to handle the entire deployment execution is not ideal. However, GitLab CI is excellent for <em>triggering</em> the deployment.</li>
+</ol>
+<h2 id="Architecture-Workflow"><a href="#Architecture-Workflow" class="headerlink" title="Architecture &amp; Workflow"></a>Architecture &amp; Workflow</h2><p>The diagram below illustrates the complete end-to-end workflow of this case study:</p>
+<p><img src="/assets/images/gitops-argocd.png" alt="GitOps-Argocd"></p>
+<h3 id="CI-Phase-—-Deliverable-Docker-Image"><a href="#CI-Phase-—-Deliverable-Docker-Image" class="headerlink" title="CI Phase — Deliverable: Docker Image"></a>CI Phase — Deliverable: Docker Image</h3><p><em>*A quick note: Because GitLab undergoes rapid version iterations and major changes, if you are unsure of your current GitLab version, please refer to the documentation in your local GitLab help page rather than the online official docs.*</em></p>
+<h4 id="User-Story"><a href="#User-Story" class="headerlink" title="User Story"></a>User Story</h4><p>Developers commit code to Project A based on their respective feature requirements. Pushing to a specific branch (in this example, <code>test_branch</code>) automatically triggers the pipeline stages defined in <code>.gitlab-ci.yml</code> (specifically, <code>build-image</code>). The runner executes the scripts declared in this stage, building a Docker image using the project’s <code>Dockerfile</code> and pushing the final image to a specified container registry.</p>
+<h4 id="gitlab-ci-yml"><a href="#gitlab-ci-yml" class="headerlink" title=".gitlab-ci.yml"></a><code>.gitlab-ci.yml</code></h4><p>The configuration for the image-building portion of our GitLab CI is as follows:</p>
+<ul>
+<li><code>variables</code> and <code>stages</code> are global configurations (we won’t repeat them later).</li>
+<li>In the <code>before_script</code> hook of the <code>build-image</code> stage, we execute a <code>docker login</code>. The main <code>script</code> block handles <code>docker build</code> and <code>docker push</code> to push the artifact to our container registry.</li>
+<li><strong>Trigger Conditions:</strong> The <code>only</code> block specifies that the pipeline only runs when changes are pushed to <code>test_branch</code> (multiple conditions under the <code>only</code> field behave as an ‘OR’ relationship). The <code>except</code> block excludes triggers on specific commit titles (the first line of the commit message) and tags. We will explain shortly why we exclude specific commit messages.</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">REGISTRY_HOST:</span> <span class="string">hub.docker.com</span></span><br><span class="line">  <span class="attr">REGISTRY_IMAGE_TAG:</span> <span class="string">$REGISTRY_HOST/your-repo/your-app:$CI_COMMIT_SHA</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build-image:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">docker:20.10</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">runner-tag</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">login</span> <span class="string">$REGISTRY_HOST</span> <span class="string">-u</span> <span class="string">$CI_REGISTRY_USER</span> <span class="string">-p</span> <span class="string">$CI_REGISTRY_PASSWORD</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-t</span> <span class="string">$REGISTRY_IMAGE_TAG</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">$REGISTRY_IMAGE_TAG</span></span><br><span class="line">  <span class="attr">except:</span></span><br><span class="line">    <span class="attr">variables:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$CI_COMMIT_TITLE</span> <span class="string">==</span> <span class="string">&quot;SkipCI&quot;</span></span><br><span class="line">    <span class="attr">refs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">tags</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">test_branch</span></span><br></pre></td></tr></table></figure>
+
+<p>For detailed syntax regarding GitLab CI, please refer to the official GitLab documentation.</p>
+<h4 id="GitLab-Runner"><a href="#GitLab-Runner" class="headerlink" title="GitLab Runner"></a>GitLab Runner</h4><p>A GitLab Runner is a mandatory component since it is the physical executor of the <code>.gitlab-ci.yml</code> pipeline. GitLab Runners can be installed in <a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">several different ways</a>. Once installed, remember to tag and group them, which allows you to target specific runners for different pipeline stages in <code>.gitlab-ci.yml</code>.</p>
+<h3 id="CD-Phase-—-Key-Word-Kustomize"><a href="#CD-Phase-—-Key-Word-Kustomize" class="headerlink" title="CD Phase — Key Word: Kustomize"></a>CD Phase — Key Word: Kustomize</h3><h4 id="Kustomize"><a href="#Kustomize" class="headerlink" title="Kustomize"></a>Kustomize</h4><p>Before diving into ArgoCD, let’s introduce <a target="_blank" rel="noopener" href="https://kustomize.io/">Kustomize</a>, a native configuration management tool for Kubernetes. It is one of the most elegant options for managing K8s manifests.</p>
+<p>Imagine this scenario: you have a single deployment that needs to be deployed to two different clusters. Typically, you might switch contexts to the first cluster and run <code>kubectl apply</code>, then switch to the second and run <code>kubectl apply</code> again. The complexity is relatively manageable.</p>
+<p>But what if you’re told that these two clusters require different container images or different startup arguments? What do you do? Copy and paste the YAML manifest and manually edit the differences? That starts to get messy and error-prone. What if you have 10 or 100 such deployments?</p>
+<p>Before you pull your hair out, take a look at Kustomize. When deploying to different environments, slight variations are inevitable (at the very least, deployment names or labels will differ). Kustomize is designed precisely to handle these overrides cleanly.</p>
+<p>If you are unfamiliar with Kustomize, don’t worry. For now, you can simply think of it as the standard Kubernetes Deployment YAML manifests—essentially, the configuration files used to deploy your app.</p>
+<h4 id="ArgoCD"><a href="#ArgoCD" class="headerlink" title="ArgoCD"></a>ArgoCD</h4><p>Now let’s introduce ArgoCD. At its core, ArgoCD is a tool that sits between your Git repository and your Kubernetes cluster. As shown in the workflow diagram, it monitors the Kustomize manifests on a specific branch of your GitLab repository on one end, and watches the actual resources running in Kubernetes on the other. It continuously compares the desired state in Git with the live state in K8s. If it detects a drift, it can trigger a synchronization to K8s, either automatically or manually.</p>
+<p>You might ask: <em>Why do we have to monitor Kustomize files stored in GitLab?</em></p>
+<ul>
+<li>If you use Kustomize manifests but don’t store them in Git, then you aren’t doing GitOps. While that is technically possible, it falls outside the scope of this tutorial. From my personal experience, keeping things simple by relying on Git as the single source of truth is highly elegant.</li>
+<li>If you are storing deployment configurations in GitLab, do they <em>have</em> to be Kustomize manifests? No, not at all. ArgoCD supports various configurations, including Helm charts, Ksonnet, Jsonnet, and raw directory layouts.</li>
+</ul>
+<h4 id="Section-Summary"><a href="#Section-Summary" class="headerlink" title="Section Summary"></a>Section Summary</h4><p>To sum up the CD portion: deployment requires configuration files (the Kustomize files mentioned above). By storing these configurations directly in Git and using a CD controller (ArgoCD) to continuously reconcile the differences between the desired Git configuration and the live K8s state, we manage deployments declaratively. This is the essence of GitOps.</p>
+<p>One final detail: since the CD tool relies on configurations stored in Git, if your deployment manifests live in the <em>same</em> Git repository as your application source code, you will need to handle a specific edge case in your GitLab pipeline. When the CI stage builds a new image, it needs to commit and push the updated image tag back into the Kustomize files in Git. However, this push will trigger the CI pipeline all over again, causing an infinite loop. </p>
+<p>To prevent this, we introduce the exclusion rule <code>$CI_COMMIT_TITLE == &quot;SkipCI&quot;</code> mentioned earlier (suitable for GitLab 10+. Modern versions of GitLab offer <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/#skip-pipeline">even more elegant ways</a> to skip pipelines). Here is the corresponding pipeline configuration from my demo project:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy-by-argo:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">alpine/git</span> <span class="comment"># We need an image with git pre-installed</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">cache:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.email</span> <span class="string">&quot;youremail@youremail.org&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.name</span> <span class="string">&quot;your-name&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">checkout</span> <span class="string">test_branch</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">pull</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">status</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sed</span> <span class="string">-i</span> <span class="string">&quot;s#/your-repo/your-app:\w*#/your-repo/your-app:$CI_COMMIT_SHA#&quot;</span> <span class="string">./hack/deploy/test_branch/patch.yaml</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">add</span> <span class="string">./hack/deploy/test_branch/patch.yaml</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">commit</span> <span class="string">-m</span> <span class="string">&quot;SkipCI&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">status</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">git</span> <span class="string">push</span> <span class="string">https://git-user:$GIT_PASSWORD@gitlab.com/your-repo/your-app.git</span> <span class="string">--all</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">runner-tag</span></span><br><span class="line">  <span class="attr">except:</span></span><br><span class="line">    <span class="attr">variables:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$CI_COMMIT_TITLE</span> <span class="string">==</span> <span class="string">&quot;SkipCI&quot;</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">test_branch</span></span><br><span class="line">  <span class="attr">dependencies:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build-image</span></span><br></pre></td></tr></table></figure>
+
+<p><code>./hack/deploy/test_branch/patch.yaml</code> file content:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">your-app</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">instance</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">hub.docker.com/your-repo/your-app:abcd123</span> <span class="comment"># Don&#x27;t edit the tag, CI will automatically replace it</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>This concludes our guide on practicing GitOps with ArgoCD. If you have any questions, feel free to leave a comment below!</strong></p>
+<h3 id="Update-2021-10-15"><a href="#Update-2021-10-15" class="headerlink" title="Update (2021-10-15)"></a>Update (2021-10-15)</h3><p>I’ve added a GitOps Demo repository: <a target="_blank" rel="noopener" href="https://github.com/lfbear/gitops-demo">https://github.com/lfbear/gitops-demo</a>.<br>This is a simplified version of the setup described above, perfect for getting a quick, hands-on experience with GitOps.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/GitLab/" rel="tag"># GitLab</a>
+              <a href="/tags/CI/" rel="tag"># CI</a>
+              <a href="/tags/CD/" rel="tag"># CD</a>
+              <a href="/tags/Argo/" rel="tag"># Argo</a>
+              <a href="/tags/Kustomize/" rel="tag"># Kustomize</a>
+              <a href="/tags/primary/" rel="tag"># primary</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/zh-CN/2021-07-06-git-ops-argocd-practice/" rel="prev" title="GitOps之ArgoCD实践">
+                  <i class="fa fa-angle-left"></i> GitOps之ArgoCD实践
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2024-09-30-long_time_no_see/" rel="next" title="Long time no see, my blog.">
+                  Long time no see, my blog. <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

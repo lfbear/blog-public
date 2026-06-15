@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="随着本地大语言模型（LLM）和多模态 AI（如 Flux、Stable Diffusion）的爆发，动辄十几 GB 甚至几十 GB 的显存需求让单卡玩家直呼吃不消。为了不让预算爆炸，利用跨代显卡混搭、压榨现有硬件价值，凑出一条 32GB 显存 的高能私有化 AI 算力矩阵，成了性价比极高的实用主义选择。 本文将为你完整梳理从旧主机（华硕 AP201 冰立方）迁移升级至新主机（联力 217 垂直风道">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DIY主机升级：打造家庭私有化AI算力小钢炮">
+<meta property="og:url" content="https://lfbear.com/zh-CN/2026-05-22-diy-ai-workstation-upgrade/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="随着本地大语言模型（LLM）和多模态 AI（如 Flux、Stable Diffusion）的爆发，动辄十几 GB 甚至几十 GB 的显存需求让单卡玩家直呼吃不消。为了不让预算爆炸，利用跨代显卡混搭、压榨现有硬件价值，凑出一条 32GB 显存 的高能私有化 AI 算力矩阵，成了性价比极高的实用主义选择。 本文将为你完整梳理从旧主机（华硕 AP201 冰立方）迁移升级至新主机（联力 217 垂直风道">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-21T19:31:39.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.737Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="DIY">
+<meta property="article:tag" content="GPU">
+<meta property="article:tag" content="Workstation">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lfbear.com/zh-CN/2026-05-22-diy-ai-workstation-upgrade/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lfbear.com/zh-CN/2026-05-22-diy-ai-workstation-upgrade/","path":"zh-CN/2026-05-22-diy-ai-workstation-upgrade/","title":"DIY主机升级：打造家庭私有化AI算力小钢炮"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DIY主机升级：打造家庭私有化AI算力小钢炮 | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小飞熊的窝</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <span class="lang-item active">简体中文</span>
+       <span class="lang-separator">|</span> 
+      
+        <a class="lang-item" href="/en/2026-05-22-diy-ai-workstation-upgrade/">English</a>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8F%97%EF%B8%8F-%E7%AE%97%E5%8A%9B%E5%8D%87%E7%BA%A7%EF%BC%9A%E6%96%B0%E6%97%A7%E9%85%8D%E7%BD%AE%E6%BC%94%E8%BF%9B"><span class="nav-number">1.</span> <span class="nav-text">🏗️ 算力升级：新旧配置演进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%8B-%E7%A1%AC%E4%BB%B6%E6%B8%85%E5%8D%95%E5%AF%B9%E6%AF%94"><span class="nav-number">1.1.</span> <span class="nav-text">📋 硬件清单对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E5%AE%9E%E6%88%98%E6%BC%94%E7%BB%83%EF%BC%9A%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%AE%89%E5%85%A8%E8%BF%81%E7%A7%BB%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">🛠️ 实战演练：四阶段安全迁移流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E6%97%A7%E6%9C%BA%E6%8B%86%E5%8D%B8%E4%B8%8E%E5%BD%95%E5%83%8F%E8%87%AA%E8%AF%81"><span class="nav-number">2.1.</span> <span class="nav-text">阶段一：旧机拆卸与录像自证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E6%96%B0%E4%B8%BB%E6%9D%BF%E3%80%8C%E6%A0%B8%E6%98%BE%E6%9E%81%E7%AE%80%E7%82%B9%E4%BA%AE%E6%B5%8B%E8%AF%95%E3%80%8D"><span class="nav-number">2.2.</span> <span class="nav-text">阶段二：新主板「核显极简点亮测试」</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%89%EF%BC%9A%E5%85%A8%E8%A3%85%E5%A4%87%E5%90%88%E4%BD%93%E8%A3%85%E7%AE%B1"><span class="nav-number">2.3.</span> <span class="nav-text">阶段三：全装备合体装箱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E5%9B%9B%EF%BC%9ABIOS-%E8%A7%A3%E7%A6%81"><span class="nav-number">2.4.</span> <span class="nav-text">阶段四：BIOS 解禁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9B%91-%E7%BB%88%E6%9E%81%E5%AE%9E%E6%88%98%EF%BC%9AAI-%E5%B0%8F%E9%92%A2%E7%82%AE%E2%80%9C%E9%81%BF%E5%9D%91%E4%B8%8E%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97%E2%80%9D"><span class="nav-number">3.</span> <span class="nav-text">🛑 终极实战：AI 小钢炮“避坑与踩坑指南”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%B1-%E7%A1%AC%E4%BB%B6%E4%B8%8E%E7%89%A9%E7%90%86%E8%A3%85%E9%85%8D%E7%AF%87"><span class="nav-number">3.1.</span> <span class="nav-text">🧱 硬件与物理装配篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-1%EF%BC%9A%E8%B7%A8%E4%BB%A3%E5%8F%8C%E6%98%BE%E5%8D%A1%E6%B7%B7%E6%90%AD%EF%BC%8C%E4%B8%8A%E4%B8%8B%E4%BD%8D%E7%BD%AE%E8%A3%85%E5%8F%8D%E5%AF%BC%E8%87%B4%E7%89%A9%E7%90%86%E5%86%B2%E7%AA%81"><span class="nav-number">3.1.1.</span> <span class="nav-text">坑位 1：跨代双显卡混搭，上下位置装反导致物理冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-2%EF%BC%9A%E6%96%B0%E6%9C%BA%E8%90%BD%E5%9C%B0%EF%BC%8C%E6%9C%BA%E7%AE%B1%E9%A3%8E%E6%89%87%E5%A6%82%E5%90%8C%E2%80%9C%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%81%9C%E6%9C%BA%E5%9D%AA%E2%80%9D%E6%BB%A1%E8%BD%BD%E7%8B%82%E9%A3%99"><span class="nav-number">3.1.2.</span> <span class="nav-text">坑位 2：新机落地，机箱风扇如同“直升机停机坪”满载狂飙</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%BF-%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2%E7%AF%87"><span class="nav-number">3.2.</span> <span class="nav-text">💿 系统与软件部署篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-3%EF%BC%9A%E5%85%B3%E9%97%AD-Secure-Boot%EF%BC%88%E5%AE%89%E5%85%A8%E5%90%AF%E5%8A%A8%EF%BC%89%E5%90%8E%E9%87%8D%E5%90%AF%E4%BE%9D%E7%84%B6%E4%B8%8D%E7%94%9F%E6%95%88"><span class="nav-number">3.2.1.</span> <span class="nav-text">坑位 3：关闭 Secure Boot（安全启动）后重启依然不生效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-4%EF%BC%9A%E5%BC%80%E5%90%AF%E5%86%85%E5%AD%98-XMP-%E5%90%8E%E9%80%9F%E5%BA%A6%E4%BE%9D%E6%97%A7%E5%81%9C%E7%95%99%E5%9C%A8-3000"><span class="nav-number">3.2.2.</span> <span class="nav-text">坑位 4：开启内存 XMP 后速度依旧停留在 3000+</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-5%EF%BC%9AWindows-11-%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%9C%AC%E5%9C%B0-AI-%E5%BC%80%E5%8F%91%E7%9A%84-Python-%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9"><span class="nav-number">3.2.3.</span> <span class="nav-text">坑位 5：Windows 11 环境下本地 AI 开发的 Python 版本选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8C%90-%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE%E4%B8%8E%E6%97%A0%E5%A4%B4%E5%B7%A5%E4%BD%9C%E7%AB%99%EF%BC%88Headless%EF%BC%89%E7%AF%87"><span class="nav-number">3.3.</span> <span class="nav-text">🌐 远程访问与无头工作站（Headless）篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-6%EF%BC%9A%E6%97%A0%E5%A4%B4-AI-%E5%B7%A5%E4%BD%9C%E7%AB%99%E9%97%B2%E7%BD%AE%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%90%8E%E5%BD%BB%E5%BA%95%E5%A4%B1%E8%81%94%E3%80%81Ping-%E4%B8%8D%E9%80%9A"><span class="nav-number">3.3.1.</span> <span class="nav-text">坑位 6：无头 AI 工作站闲置一段时间后彻底失联、Ping 不通</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-7%EF%BC%9A%E5%88%A9%E7%94%A8-TrueNAS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E5%94%A4%E9%86%92%E5%81%87%E6%AD%BB%E7%BD%91%E5%8D%A1%E6%97%B6%EF%BC%8C%E5%8F%AA%E7%9F%A5%E9%81%93-IP-%E4%B8%8D%E7%9F%A5%E9%81%93-MAC"><span class="nav-number">3.3.2.</span> <span class="nav-text">坑位 7：利用 TrueNAS 服务器远程唤醒假死网卡时，只知道 IP 不知道 MAC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%91%E4%BD%8D-8%EF%BC%9A%E5%A4%96%E9%83%A8%E9%80%9A%E8%BF%87-SSH-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%98%A0%E5%B0%84-3389-%E6%8A%A5-administratively-prohibited-%E9%94%99%E8%AF%AF"><span class="nav-number">3.3.3.</span> <span class="nav-text">坑位 8：外部通过 SSH 端口转发映射 3389 报 administratively prohibited 错误</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/zh-CN/2026-05-22-diy-ai-workstation-upgrade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy —— 从网页少年到云原生老兵的碎碎念">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DIY主机升级：打造家庭私有化AI算力小钢炮 | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DIY主机升级：打造家庭私有化AI算力小钢炮
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-22 03:31:39" itemprop="dateCreated datePublished" datetime="2026-05-22T03:31:39+08:00">2026-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>随着本地大语言模型（LLM）和多模态 AI（如 Flux、Stable Diffusion）的爆发，动辄十几 GB 甚至几十 GB 的显存需求让单卡玩家直呼吃不消。为了不让预算爆炸，利用跨代显卡混搭、压榨现有硬件价值，凑出一条 <strong>32GB 显存</strong> 的高能私有化 AI 算力矩阵，成了性价比极高的实用主义选择。</p>
+<p>本文将为你完整梳理从旧主机（华硕 AP201 冰立方）迁移升级至新主机（联力 217 垂直风道）的全过程，并附带一份极具实战价值的**“硬核踩坑与避坑指南”**。</p>
+<hr>
+<span id="more"></span>
+
+<h2 id="🏗️-算力升级：新旧配置演进"><a href="#🏗️-算力升级：新旧配置演进" class="headerlink" title="🏗️ 算力升级：新旧配置演进"></a>🏗️ 算力升级：新旧配置演进</h2><p>这次升级的核心逻辑是：保留依然能打的 <strong>Intel i7-12700K</strong>，出掉不适合扩容双卡的 MATX 平台，全面拥抱具备多条加固 PCIe 插槽的微星 <strong>Z690 CARBON WIFI</strong> 大板；供电直接一步到位升级至振华原生 <strong>ATX 3.1 1300W</strong>，用来伺候最新的 <strong>RTX 5070 Ti SUPER</strong> 与旧的 <strong>RTX 4070 Ti SUPER</strong>。</p>
+<h3 id="📋-硬件清单对比"><a href="#📋-硬件清单对比" class="headerlink" title="📋 硬件清单对比"></a>📋 硬件清单对比</h3><table>
+<thead>
+<tr>
+<th align="left">核心部件</th>
+<th align="left">旧主机配置（华硕 AP201 平台）</th>
+<th align="left">新主机配置（联力 217 算力堡垒）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>CPU</strong></td>
+<td align="left">Intel i7-12700K (自带核显 UHD 770)</td>
+<td align="left">Intel i7-12700K (沿用)</td>
+</tr>
+<tr>
+<td align="left"><strong>主板</strong></td>
+<td align="left">华硕 TUF GAMING B760M-PLUS WIFI II</td>
+<td align="left"><strong>微星 MPG Z690 CARBON WIFI</strong> (升级大板)</td>
+</tr>
+<tr>
+<td align="left"><strong>内存</strong></td>
+<td align="left">金百达 DDR5 32GB (16GB×2)</td>
+<td align="left">金百达 DDR5 32GB (16GB×2 沿用)</td>
+</tr>
+<tr>
+<td align="left"><strong>主显卡</strong></td>
+<td align="left">-</td>
+<td align="left"><strong>耕升 RTX 5070 Ti 追风 OC 2.0 (16G)</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>副显卡</strong></td>
+<td align="left">华硕 TUF RTX 4070 Ti SUPER O16G</td>
+<td align="left"><strong>华硕 TUF RTX 4070 Ti SUPER O16G</strong> (留用)</td>
+</tr>
+<tr>
+<td align="left"><strong>存储</strong></td>
+<td align="left">西数 SN7100 2TB PCIe 4.0</td>
+<td align="left">西数 SN7100 2TB (沿用)</td>
+</tr>
+<tr>
+<td align="left"><strong>散热</strong></td>
+<td align="left">旧风冷散热器</td>
+<td align="left"><strong>利民 Frozen Prism 360 一体式水冷</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>电源</strong></td>
+<td align="left">华硕 TUF 750W 铜牌</td>
+<td align="left"><strong>振华 Leadex VII 1300W 金牌全模 (ATX 3.1)</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🛠️-实战演练：四阶段安全迁移流程"><a href="#🛠️-实战演练：四阶段安全迁移流程" class="headerlink" title="🛠️ 实战演练：四阶段安全迁移流程"></a>🛠️ 实战演练：四阶段安全迁移流程</h2><h3 id="阶段一：旧机拆卸与录像自证"><a href="#阶段一：旧机拆卸与录像自证" class="headerlink" title="阶段一：旧机拆卸与录像自证"></a>阶段一：旧机拆卸与录像自证</h3><ol>
+<li><strong>彻底放电</strong>：拔掉电源线，长按旧机箱开机键 10 秒释放电容余电。</li>
+<li><strong>拆卸显卡</strong>：按下主板 PCIe 插槽尾部的塑料卡扣，垂直向上拔出华硕 TUF 4070 Ti S，妥善平放。</li>
+<li><strong>拍摄亮机视频</strong>：将旧主板的所有连线断开，在纸盒上搭建“最小系统”（只插主板、CPU、单根内存、电源 24-pin 和 CPU 8-pin，视频线接主板核显口）。用螺丝刀短接 <code>PANEL</code> 接口的 <strong>第 3 和第 4 针脚（PWRSW）</strong> 触发开机，镜头对准右上角 <strong>Q-LED 跑码灯</strong>（红-&gt;黄-&gt;白&#x2F;绿），直至显示器亮起。这段视频可以作为日后二手出售主板的“无暗病自保证明”。</li>
+</ol>
+<h3 id="阶段二：新主板「核显极简点亮测试」"><a href="#阶段二：新主板「核显极简点亮测试」" class="headerlink" title="阶段二：新主板「核显极简点亮测试」"></a>阶段二：新主板「核显极简点亮测试」</h3><p><strong>绝对红线</strong>：大件入箱极为繁琐，一旦遇到主板出厂瑕疵（不良品）将会面临全部拆光的崩溃境地。必须先做<strong>裸板测试</strong>！</p>
+<ol>
+<li><strong>利用核显，拒绝干扰</strong>：由于 12700K 自带核显，测试时<strong>千万不要插显卡</strong>。这不仅能排除显卡干扰、保护插槽，还能减少连线。</li>
+<li><strong>免螺丝盲压散热</strong>：将新主板放在纸盒上，放入 CPU，插一根内存（DIMM A2 插槽）。不需要涂硅脂，<strong>直接把旧风冷散热器的金属底座用手平稳地“压”在 CPU 表面</strong>。将风扇线插在 <code>CPU_FAN1</code> 上。</li>
+<li><strong>点亮自检</strong>：接入电源主板及 CPU 供电线，按下微星 Z690 Carbon 右下方自带的<strong>物理红色开机键（POWER）</strong>。Debug 灯最终停留在 <code>A0</code> 或 <code>AA</code> 且显示器亮起，即代表大三件完好。</li>
+</ol>
+<h3 id="阶段三：全装备合体装箱"><a href="#阶段三：全装备合体装箱" class="headerlink" title="阶段三：全装备合体装箱"></a>阶段三：全装备合体装箱</h3><ol>
+<li><strong>机箱外二次预装</strong>：在箱外装好西数固态（<strong>记得撕掉微星 M.2 散热铠甲背面的保护膜</strong>），并将两根 16G 内存插在 <strong>第 2 和第 4 根插槽（DIMM A2 与 B2）</strong> 组双通道。</li>
+<li><strong>双显卡精确错位安装（重点）</strong>：联力 217 内装双卡时，必须由下至上安装。先将厚达 3.25 槽的华硕 TUF 4070 Ti S 插在下方的 <strong>PCI_E2</strong> 插槽；后将较薄的 2.5 槽耕升 5070 Ti S 插在第一条 <strong>PCI_E1</strong> 插槽。立刻用<strong>双头立式金属显卡支架</strong>将两张卡托平，强行捍卫中间约 10-15mm 的进气风道。</li>
+<li><strong>50 系特规理线</strong>：拉出振华两根原厂独立的 12V-2x6 线缆，用力插紧直至听到“咔哒”声，绝不能留有缝隙。</li>
+</ol>
+<h3 id="阶段四：BIOS-解禁"><a href="#阶段四：BIOS-解禁" class="headerlink" title="阶段四：BIOS 解禁"></a>阶段四：BIOS 解禁</h3><p>将显示器线插在最上方的耕升显卡尾部。开机按 <code>Del</code> 进入 BIOS：</p>
+<ul>
+<li>点击左上角 <strong>XMP</strong> 按钮一键解锁内存高频。</li>
+<li>按 <code>F7</code> 进入高级模式 $<br>ightarrow$ <code>Settings</code> $<br>ightarrow$ <code>Advanced</code> $<br>ightarrow$ <code>PCIe/PCI Subsystem Settings</code>。将 <strong><code>Above 4G Decoding</code></strong> 与 <strong><code>Re-size BAR Support</code></strong> 全部修改为 <strong>[Enabled &#x2F; 开启]</strong>。</li>
+</ul>
+<hr>
+<h2 id="🛑-终极实战：AI-小钢炮“避坑与踩坑指南”"><a href="#🛑-终极实战：AI-小钢炮“避坑与踩坑指南”" class="headerlink" title="🛑 终极实战：AI 小钢炮“避坑与踩坑指南”"></a>🛑 终极实战：AI 小钢炮“避坑与踩坑指南”</h2><h3 id="🧱-硬件与物理装配篇"><a href="#🧱-硬件与物理装配篇" class="headerlink" title="🧱 硬件与物理装配篇"></a>🧱 硬件与物理装配篇</h3><h4 id="坑位-1：跨代双显卡混搭，上下位置装反导致物理冲突"><a href="#坑位-1：跨代双显卡混搭，上下位置装反导致物理冲突" class="headerlink" title="坑位 1：跨代双显卡混搭，上下位置装反导致物理冲突"></a>坑位 1：跨代双显卡混搭，上下位置装反导致物理冲突</h4><ul>
+<li><strong>现象</strong>：按习惯将旧的华硕 TUF 4070 Ti S 插在最上面的主插槽（PCI_E1），结果发现第二条插槽（PCI_E2）被完全挡死。</li>
+<li><strong>解法</strong>：必须将较薄的 <strong>耕升 5070 Ti 追风（2.5 槽）插在上方 PCI_E1</strong>，将<strong>华硕 TUF 插在下方 PCI_E2</strong>，向下延展。</li>
+</ul>
+<h4 id="坑位-2：新机落地，机箱风扇如同“直升机停机坪”满载狂飙"><a href="#坑位-2：新机落地，机箱风扇如同“直升机停机坪”满载狂飙" class="headerlink" title="坑位 2：新机落地，机箱风扇如同“直升机停机坪”满载狂飙"></a>坑位 2：新机落地，机箱风扇如同“直升机停机坪”满载狂飙</h4><ul>
+<li><strong>现象</strong>：主板和 CPU 温度极低，但机箱风扇始终 100% 全速咆哮。</li>
+<li><strong>解法</strong>：进入 BIOS 里的 <code>HARDWARE MONITOR</code>，将该风扇接口从默认的 <code>DC</code> 切换为 <strong><code>PWM</code> 模式</strong>，并勾选 <strong><code>Smart Fan Mode</code>（智能风扇模式）</strong>。</li>
+</ul>
+<h3 id="💿-系统与软件部署篇"><a href="#💿-系统与软件部署篇" class="headerlink" title="💿 系统与软件部署篇"></a>💿 系统与软件部署篇</h3><h4 id="坑位-3：关闭-Secure-Boot（安全启动）后重启依然不生效"><a href="#坑位-3：关闭-Secure-Boot（安全启动）后重启依然不生效" class="headerlink" title="坑位 3：关闭 Secure Boot（安全启动）后重启依然不生效"></a>坑位 3：关闭 Secure Boot（安全启动）后重启依然不生效</h4><ul>
+<li><strong>现象</strong>：使用 Rufus 制作的 Windows 11 安装 U 盘在引导时报错。在 BIOS 中把 Secure Boot 改成 <code>Disabled</code> 依然失效。</li>
+<li><strong>解法</strong>：将 <code>Secure Boot Mode</code> 从 <code>[Standard]</code> 修改为 <strong><code>[Custom]</code>（自定义）</strong>。点击进入 <code>Key Management</code>（密钥管理），选择 <strong><code>Clear Secure Boot Keys</code>（清除安全启动密钥）</strong>，再次将其设为 <code>[Disabled]</code>。</li>
+</ul>
+<h4 id="坑位-4：开启内存-XMP-后速度依旧停留在-3000"><a href="#坑位-4：开启内存-XMP-后速度依旧停留在-3000" class="headerlink" title="坑位 4：开启内存 XMP 后速度依旧停留在 3000+"></a>坑位 4：开启内存 XMP 后速度依旧停留在 3000+</h4><ul>
+<li><strong>解法</strong>：首选去微星官网<strong>刷新主板最新版 BIOS</strong>。若仍不行，改用微星大招 <strong><code>Memory Try It!</code></strong> 功能，小幅降频选择 <strong><code>5600 CL36</code></strong> 或 <strong><code>5800 CL36</code></strong> 运行。</li>
+</ul>
+<h4 id="坑位-5：Windows-11-环境下本地-AI-开发的-Python-版本选择"><a href="#坑位-5：Windows-11-环境下本地-AI-开发的-Python-版本选择" class="headerlink" title="坑位 5：Windows 11 环境下本地 AI 开发的 Python 版本选择"></a>坑位 5：Windows 11 环境下本地 AI 开发的 Python 版本选择</h4><ul>
+<li><strong>标准答案</strong>：目前整个 AI 开源界包容度最高、轮子最全的“甜点区”是 <strong><code>Python 3.11.x</code></strong>。如果是主攻 ComfyUI，建议直接下载官方的 <strong>Standalone Portable 便携版</strong>。</li>
+</ul>
+<h3 id="🌐-远程访问与无头工作站（Headless）篇"><a href="#🌐-远程访问与无头工作站（Headless）篇" class="headerlink" title="🌐 远程访问与无头工作站（Headless）篇"></a>🌐 远程访问与无头工作站（Headless）篇</h3><h4 id="坑位-6：无头-AI-工作站闲置一段时间后彻底失联、Ping-不通"><a href="#坑位-6：无头-AI-工作站闲置一段时间后彻底失联、Ping-不通" class="headerlink" title="坑位 6：无头 AI 工作站闲置一段时间后彻底失联、Ping 不通"></a>坑位 6：无头 AI 工作站闲置一段时间后彻底失联、Ping 不通</h4><ul>
+<li><strong>解法（三管齐下）</strong>：<ul>
+<li>设备管理器 $<br>ightarrow$ 网卡属性 $<br>ightarrow$ 【电源管理】中<strong>取消勾选</strong>“允许计算机关闭此设备以节约电源”。</li>
+<li>电源选项 $<br>ightarrow$ 高级电源设置 $<br>ightarrow$ 【PCI Express】 $<br>ightarrow$ <strong>【链路状态电源管理】修改为【关闭】</strong>。</li>
+<li>将“关闭显示器”的时间修改为【从不】。</li>
+</ul>
+</li>
+</ul>
+<h4 id="坑位-7：利用-TrueNAS-服务器远程唤醒假死网卡时，只知道-IP-不知道-MAC"><a href="#坑位-7：利用-TrueNAS-服务器远程唤醒假死网卡时，只知道-IP-不知道-MAC" class="headerlink" title="坑位 7：利用 TrueNAS 服务器远程唤醒假死网卡时，只知道 IP 不知道 MAC"></a>坑位 7：利用 TrueNAS 服务器远程唤醒假死网卡时，只知道 IP 不知道 MAC</h4><ul>
+<li><strong>解法</strong>：在 TrueNAS 终端运行以下 Python 脚本，通过 ARP 嗅探自动抓取 MAC 地址并广播发射魔术数据包：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">python3 -c <span class="string">&quot;</span></span><br><span class="line"><span class="string">import socket, subprocess, re</span></span><br><span class="line"><span class="string">target_ip = &#x27;192.168.31.100&#x27;</span></span><br><span class="line"><span class="string">_ = subprocess.getoutput(f&#x27;ping -c 1 -W 1 &#123;target_ip&#125;&#x27;)</span></span><br><span class="line"><span class="string">arp_out = subprocess.getoutput(f&#x27;arp -n &#123;target_ip&#125;&#x27;)</span></span><br><span class="line"><span class="string">match = re.search(r&#x27;(([0-9a-fA-F]&#123;2&#125;:)&#123;5&#125;[0-9a-fA-F]&#123;2&#125;)&#x27;, arp_out)</span></span><br><span class="line"><span class="string">if match:</span></span><br><span class="line"><span class="string">    mac_address = match.group(1).replace(&#x27;:&#x27;, &#x27;&#x27;)</span></span><br><span class="line"><span class="string">    packet = bytes.fromhex(&#x27;FFFFFFFFFFFF&#x27; + mac_address * 16)</span></span><br><span class="line"><span class="string">    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span></span><br><span class="line"><span class="string">    s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)</span></span><br><span class="line"><span class="string">    s.sendto(packet, (&#x27;255.255.255.255&#x27;, 9))</span></span><br><span class="line"><span class="string">    print(f&#x27;成功自动获取 MAC 并向 &#123;target_ip&#125; 发送唤醒信号！&#x27;)</span></span><br><span class="line"><span class="string">else:</span></span><br><span class="line"><span class="string">    print(&#x27;【失败】: 缓存已清空，无法通过 IP 逆向解析出 MAC 物理地址。&#x27;)</span></span><br><span class="line"><span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="坑位-8：外部通过-SSH-端口转发映射-3389-报-administratively-prohibited-错误"><a href="#坑位-8：外部通过-SSH-端口转发映射-3389-报-administratively-prohibited-错误" class="headerlink" title="坑位 8：外部通过 SSH 端口转发映射 3389 报 administratively prohibited 错误"></a>坑位 8：外部通过 SSH 端口转发映射 3389 报 <code>administratively prohibited</code> 错误</h4><ul>
+<li><strong>解法</strong>：登录跳板 Linux 宿主机，修改 SSH 配置文件：<code>sudo nano /etc/ssh/sshd_config</code>。将 <strong><code>AllowTcpForwarding</code></strong> 修改为 <strong><code>yes</code></strong> 并重启 SSH 服务。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/GPU/" rel="tag"># GPU</a>
+              <a href="/tags/DIY/" rel="tag"># DIY</a>
+              <a href="/tags/Workstation/" rel="tag"># Workstation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2024-09-30-long_time_no_see/" rel="prev" title="Long time no see, my blog.">
+                  <i class="fa fa-angle-left"></i> Long time no see, my blog.
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2026-05-22-diy-ai-workstation-upgrade/" rel="next" title="DIY Workstation Upgrade: Building a Home-Hosted Private AI Powerhouse">
+                  DIY Workstation Upgrade: Building a Home-Hosted Private AI Powerhouse <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

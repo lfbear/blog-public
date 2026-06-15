@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="收获">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Key Takeaways: Building High-Performance Web Pages &amp; Understanding Analytics">
+<meta property="og:url" content="https://lfbear.com/en/2008-12-17-gong-zuo-shou-huo-ji-lu/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="收获">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-12-16T23:55:06.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.729Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="优化">
+<meta property="article:tag" content="收获">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lfbear.com/en/2008-12-17-gong-zuo-shou-huo-ji-lu/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://lfbear.com/en/2008-12-17-gong-zuo-shou-huo-ji-lu/","path":"en/2008-12-17-gong-zuo-shou-huo-ji-lu/","title":"Key Takeaways: Building High-Performance Web Pages & Understanding Analytics"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Key Takeaways: Building High-Performance Web Pages & Understanding Analytics | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Cub's Lair</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about">
+
+    <a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <a class="lang-item" href="/2008-12-17-gong-zuo-shou-huo-ji-lu/">简体中文</a>
+       <span class="lang-separator">|</span> 
+      
+        <span class="lang-item active">English</span>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mission-1-High-Performance-Web-Pages"><span class="nav-number">1.</span> <span class="nav-text">Mission 1: High-Performance Web Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Minimize-HTTP-Requests-as-Much-as-Possible"><span class="nav-number">1.1.</span> <span class="nav-text">1. Minimize HTTP Requests as Much as Possible</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Reducing-TCP-IP-Connections-Directly"><span class="nav-number">1.2.</span> <span class="nav-text">2. Reducing TCP&#x2F;IP Connections Directly</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Use-Gzip-Compression"><span class="nav-number">1.3.</span> <span class="nav-text">3. Use Gzip Compression</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-CSS-at-the-Top-JS-at-the-Bottom-See-resources-at-the-end-for-details"><span class="nav-number">1.4.</span> <span class="nav-text">4. CSS at the Top, JS at the Bottom (See resources at the end for details)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Disable-ETags-Under-Load-Balancing-See-resources-at-the-end-for-details"><span class="nav-number">1.5.</span> <span class="nav-text">5. Disable ETags Under Load Balancing (See resources at the end for details)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mission-2-What-Does-Your-Site-Actually-Need"><span class="nav-number">2.</span> <span class="nav-text">Mission 2: What Does Your Site Actually Need?</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/en/2008-12-17-gong-zuo-shou-huo-ji-lu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Key Takeaways: Building High-Performance Web Pages & Understanding Analytics | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Key Takeaways: Building High-Performance Web Pages & Understanding Analytics
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2008-12-17 07:55:06" itemprop="dateCreated datePublished" datetime="2008-12-17T07:55:06+08:00">2008-12-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Professional-Thoughts/" itemprop="url" rel="index"><span itemprop="name">Professional Thoughts</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Recently, our company organized two training sessions. I’m writing down some of my key takeaways here (not the direct training slides, but my own summaries and thoughts), so I don’t end up forgetting them over time~ Feel free to share your thoughts—knowledge only grows when we exchange it!</p>
+<!--more-->
+
+<h3 id="Mission-1-High-Performance-Web-Pages"><a href="#Mission-1-High-Performance-Web-Pages" class="headerlink" title="Mission 1: High-Performance Web Pages"></a>Mission 1: High-Performance Web Pages</h3><p>I’m sure everyone has been there: opening a webpage, waiting forever, only to end up with “This page cannot be displayed” or seeing only a broken, partially loaded page. This kind of experience is incredibly frustrating for users. While there can be many culprits—sometimes client-side issues—the majority of the time, the bottleneck lies on the server side. </p>
+<p>So, here are a few tips on server-side optimization, primarily geared toward front-end developers (including RIA developers and page builders).</p>
+<h4 id="1-Minimize-HTTP-Requests-as-Much-as-Possible"><a href="#1-Minimize-HTTP-Requests-as-Much-as-Possible" class="headerlink" title="1. Minimize HTTP Requests as Much as Possible"></a>1. Minimize HTTP Requests as Much as Possible</h4><p>Anyone who has studied networking knows that HTTP is an application layer protocol. Too many HTTP requests inevitably lead to an excessive number of TCP&#x2F;IP connections. And as we all know, establishing a TCP&#x2F;IP connection requires a three-way handshake! Therefore, reducing HTTP requests directly cuts down network communication overhead, thereby speeding up page load times.</p>
+<p>A single HTML&#x2F;HTM page counts as one HTTP request, and every image, Flash, or external asset embedded in that page counts as an additional request. While reducing unnecessary elements is ideal, sometimes you might say: “But all of these are important, we can’t just toss them out!” Okay, if we can’t throw them out, we don’t have to. Let’s find another way.</p>
+<p>A classic industry solution for optimizing images is using <strong>CSS Sprites</strong>: combining all small images into a single larger image file, and then using CSS positioning (<code>background-position</code>) to display the specific image needed. This is a tried-and-true method used by countless websites. One single HTTP request to handle all small images!</p>
+<h4 id="2-Reducing-TCP-IP-Connections-Directly"><a href="#2-Reducing-TCP-IP-Connections-Directly" class="headerlink" title="2. Reducing TCP&#x2F;IP Connections Directly"></a>2. Reducing TCP&#x2F;IP Connections Directly</h4><ul>
+<li><strong>a. Enable Keep-Alive</strong>: Ensure <code>Keep-Alive</code> is enabled in your HTTP headers (if supported by your server).</li>
+<li><strong>b. Implement Smart Caching</strong>: For static resources, you can set the cache expiration date to never expire. For dynamic resources, set appropriate expiration times based on requirements. <em>(Here’s a little secret commonly used by industry pros: set static resources to never expire, but append a version number to the filename—for example, naming <code>my.js</code> as <code>my_0.1.0.js</code>. This way, whenever you update static resources, users get the latest version immediately without any cache-busting pain).</em></li>
+<li><strong>c. Socket Reuse</strong>: This depends highly on your server environment. Interested folks can Google this (full disclosure: I’m not an expert on this one either, haha).</li>
+<li><strong>d. Limit Subdomain Variety</strong>: It’s generally best to keep the number of subdomains between 4 to 8, depending on traffic volume and load balancing configurations.</li>
+</ul>
+<h4 id="3-Use-Gzip-Compression"><a href="#3-Use-Gzip-Compression" class="headerlink" title="3. Use Gzip Compression"></a>3. Use Gzip Compression</h4><p>Enable Gzip compression on the server to compress data sent over the network, saving precious bandwidth. Most modern servers support Gzip right out of the box. However, that doesn’t mean you should compress absolutely everything. </p>
+<p><em>Recommended strategy</em>: Use it for text-based files that are at least a few kilobytes in size (e.g., JS, HTML, XML). Compressing JPEG images with Gzip makes zero sense.</p>
+<h4 id="4-CSS-at-the-Top-JS-at-the-Bottom-See-resources-at-the-end-for-details"><a href="#4-CSS-at-the-Top-JS-at-the-Bottom-See-resources-at-the-end-for-details" class="headerlink" title="4. CSS at the Top, JS at the Bottom (See resources at the end for details)"></a>4. CSS at the Top, JS at the Bottom (See resources at the end for details)</h4><h4 id="5-Disable-ETags-Under-Load-Balancing-See-resources-at-the-end-for-details"><a href="#5-Disable-ETags-Under-Load-Balancing-See-resources-at-the-end-for-details" class="headerlink" title="5. Disable ETags Under Load Balancing (See resources at the end for details)"></a>5. Disable ETags Under Load Balancing (See resources at the end for details)</h4><hr>
+<h3 id="Mission-2-What-Does-Your-Site-Actually-Need"><a href="#Mission-2-What-Does-Your-Site-Actually-Need" class="headerlink" title="Mission 2: What Does Your Site Actually Need?"></a>Mission 2: What Does Your Site Actually Need?</h3><p>This section is all about data analysis and analytics. Specifically, putting tracking codes on live products to monitor traffic and taking action when anomalies occur. This is a fantastic habit. While large-scale websites can build their own custom internal monitoring systems, for small-to-medium sites or personal blogs, I highly recommend using Google Analytics (<a target="_blank" rel="noopener" href="http://www.google.com/analytics/">http://www.google.com/analytics/</a>). It’s an outstanding system that is definitely worth trying.</p>
+<p><strong>The Goal</strong>: The goal of data analysis is simple—identify your enemies (those maliciously scraping&#x2F;draining your resources) and your friends (legitimate users). </p>
+<ul>
+<li>What do you do if you get too many enemies? You tighten up your security mechanisms and implement rate limiting.</li>
+<li>What do you do when you get more friends? You scale up your servers, deploy CDNs, and optimize performance to keep their experience smooth.</li>
+<li>Additionally, looking at historical data allows you to make predictions, such as anticipating traffic spikes during breaking news or identifying traffic trends during specific times of the day.</li>
+</ul>
+<p><strong>In a Nutshell</strong>: You need to know not only <em>what</em> you are building, but also <em>how</em> well it is performing. Use periodic statistical results and predictions to drive and optimize your strategy for the next phase!</p>
+<hr>
+<p><strong>Resource Download</strong>: <a href="/assets/images/20081226_117427.rar">High-Performance Web Pages Tutorial</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%94%B6%E8%8E%B7/" rel="tag"># 收获</a>
+              <a href="/tags/%E4%BC%98%E5%8C%96/" rel="tag"># 优化</a>
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/zh-CN/2008-12-17-gong-zuo-shou-huo-ji-lu/" rel="prev" title="工作收获记录">
+                  <i class="fa fa-angle-left"></i> 工作收获记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/zh-CN/2008-12-26-cong-yi-ze-xin-wen-xiang-dao-de/" rel="next" title="从一则新闻想到的...">
+                  从一则新闻想到的... <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

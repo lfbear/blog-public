@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="其实作为游戏作者来讲，是很唾弃外挂这个东西的，因为它让游戏失去了乐趣并且让游戏过早的死掉。原本不想这样的，但是我的虎机的确已经没有钱了，所以还是被迫用写了一个。因为熊熊我是老虎机的作者，所以这段代码暂不予完整公布了（ps：大家都来刷老虎机的话估计我又要收到增加防刷的任务咯，为了给自己减少点工作吧，嘿嘿），但是我会教给大家如何来使用php来写网页游戏外挂。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="写了一段很罪恶的代码">
+<meta property="og:url" content="https://lfbear.com/zh-CN/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="其实作为游戏作者来讲，是很唾弃外挂这个东西的，因为它让游戏失去了乐趣并且让游戏过早的死掉。原本不想这样的，但是我的虎机的确已经没有钱了，所以还是被迫用写了一个。因为熊熊我是老虎机的作者，所以这段代码暂不予完整公布了（ps：大家都来刷老虎机的话估计我又要收到增加防刷的任务咯，为了给自己减少点工作吧，嘿嘿），但是我会教给大家如何来使用php来写网页游戏外挂。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-11-13T18:47:29.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.734Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="外挂">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lfbear.com/zh-CN/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lfbear.com/zh-CN/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/","path":"zh-CN/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/","title":"写了一段很罪恶的代码"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>写了一段很罪恶的代码 | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小飞熊的窝</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <span class="lang-item active">简体中文</span>
+       <span class="lang-separator">|</span> 
+      
+        <a class="lang-item" href="/en/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/">English</a>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/zh-CN/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy —— 从网页少年到云原生老兵的碎碎念">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="写了一段很罪恶的代码 | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          写了一段很罪恶的代码
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2008-11-14 02:47:29" itemprop="dateCreated datePublished" datetime="2008-11-14T02:47:29+08:00">2008-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Developer-Life/" itemprop="url" rel="index"><span itemprop="name">Developer Life</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>其实作为游戏作者来讲，是很唾弃外挂这个东西的，因为它让游戏失去了乐趣并且让游戏过早的死掉。原本不想这样的，但是我的虎机的确已经没有钱了，所以还是被迫用写了一个。因为熊熊我是老虎机的作者，所以这段代码暂不予完整公布了（ps：大家都来刷老虎机的话估计我又要收到增加防刷的任务咯，为了给自己减少点工作吧，嘿嘿），但是我会教给大家如何来使用php来写网页游戏外挂。<span id="more"></span></p>
+<p>其实先从外挂的原理来说，很简单，就是让机器来代替人，完成有规律的操作。所以外挂对于游戏玩家是件很好的东西，对于程序员们来讲只是为了让自己休息一会的东西，呵呵~ (下面是我的外挂程序中的主体部分)<br />
+PHP代码<br />
+$ch = curl_init();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+curl_setopt($cu,CURLOPT_REFERER,''http://xxx'');&nbsp;&nbsp;<br />
+curl_setopt($ch,CURLOPT_URL, ''http://yyy'');&nbsp;&nbsp;&nbsp;<br />
+curl_setopt($ch, CURLOPT_POST, 1);&nbsp;&nbsp;<br />
+curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+curl_setopt($cu,CURLOPT_COOKIEFILE,$cookiefile);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+curl_setopt($ch, CURLOPT_HEADER, false);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+curl_setopt($ch, CURLOPT_NOBODY, false);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+$re = curl_exec($ch);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+curl_close($ch);&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;<br />
+言归正传，在php中主要使用curl系列函数来伪装浏览器对指定脚本进行频繁的规律性调用，curl系列函数，是由curl_init开始，中间使用curl_setopt来设置伪装参数，最后使用curl_exec执行调用，并以curl_close结束。整个流程是否简单，随后我会把setopt的具体参数以及说明贴在文章后面的（主要是setopt来做的伪装工作），它可以伪装登录并且几乎伪装真人的任何操作，很强大~<br />
+&nbsp;<br />
+Web游戏一般都是基于自己和朋友之间的，因此第一步就是获取好友列表，这个操作通常需要firefox配合firebug抓数据来实现，抓出来的数据需要整理一下，用特殊的符号来分隔。ok，现在程序知道你和谁来玩游戏了，下一步，依然用firefox配合firebug来抓真实游戏地址的url，是要提交游戏参数的那个脚本哦（以下简称为游戏主脚本）~ 使用上面程序中的第3行代码来标明url，并且使用第4、5行来发送post数据($postdata=''act=play&amp;money=123&amp;....'' post数据一般是n多参数用&amp;符来连接，这样子来写)，如果是get方式那就更简单了，直接拼出来放在url后面就可以了，第7行是负责把服务器端的信息返回给$re的，这样就可以解析服务器端的返回，来判断下一步应该做什么事情了，注：服务器端返回的结果一般都是经过编码的，常见的有json，xml和序列化数组的编码方式，记得要解码再分析哦~ 大家可能开始疑问第2行和第6行的作用了，呵呵这两行的主要作用是欺骗，第2行是模拟数据提交前的地址，一般游戏主脚本都会验证这个，以判断该提交参数的来源是否合法，而第6行是模拟正式登录用户的cookie（同理，使用上面的脚本加入 curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile); 代码来获取cookie），告诉游戏主脚本的确是你在玩游戏。<br />
+&nbsp;<br />
+整个流程大体就是这样咯，其他就是给上面这段代码加个循环（遍历到所有好友），加个返回值判断和参数调整或者跳转咯。不同的web游戏可能会增加其他的过滤或者判断，建议写外挂代码前先整体玩一遍游戏，并用firebug记录整个游戏流程，然后再开始动手，否则不容易成功哦~<br />
+&nbsp;<br />
+可能文中有些地方解释的不足，最后欢迎大家和熊熊一起交流技术~ 以下是关于curl_setopt的常用参数（摘自网络，感谢译者）<br />
+curl_setopt参数说明<br />
+bool curl_setopt (int ch, string option, mixed value)&nbsp;&nbsp;<br />
+curl_setopt()函数将为一个CURL会话设置选项。option参数是你想要的设置，value是这个选项给定的值。&nbsp;&nbsp;<br />
+下列选项的值将被作为长整形使用(在option参数中指定)：　&nbsp;&nbsp;<br />
+CURLOPT_INFILESIZE: 当你上传一个文件到远程站点，这个选项告诉PHP你上传文件的大小。&nbsp;&nbsp;<br />
+CURLOPT_VERBOSE: 如果你想CURL报告每一件意外的事情，设置这个选项为一个非零值。&nbsp;&nbsp;<br />
+CURLOPT_HEADER: 如果你想把一个头包含在输出中，设置这个选项为一个非零值。&nbsp;&nbsp;<br />
+CURLOPT_NOPROGRESS: 如果你不会PHP为CURL传输显示一个进程条，设置这个选项为一个非零值。注意：PHP自动设置这个选项为非零值，你应该仅仅为了调试的目的来改变这个选项。&nbsp;&nbsp;<br />
+CURLOPT_NOBODY: 如果你不想在输出中包含body部分，设置这个选项为一个非零值。&nbsp;&nbsp;<br />
+CURLOPT_FAILONERROR: 如果你想让PHP在发生错误(HTTP代码返回大于等于300)时，不显示，设置这个选项为一人非零值。默认行为是返回一个正常页，忽略代码。&nbsp;&nbsp;<br />
+CURLOPT_UPLOAD: 如果你想让PHP为上传做准备，设置这个选项为一个非零值。&nbsp;&nbsp;<br />
+CURLOPT_POST: 如果你想PHP去做一个正规的HTTP POST，设置这个选项为一个非零值。这个POST是普通的 application/x-www-from-urlencoded 类型，多数被HTML表单使用。&nbsp;&nbsp;<br />
+CURLOPT_FTPLISTONLY: 设置这个选项为非零值，PHP将列出FTP的目录名列表。&nbsp;&nbsp;<br />
+CURLOPT_FTPAPPEND: 设置这个选项为一个非零值，PHP将应用远程文件代替覆盖它。&nbsp;&nbsp;<br />
+CURLOPT_NETRC: 设置这个选项为一个非零值，PHP将在你的 ~./netrc 文件中查找你要建立连接的远程站点的用户名及密码。&nbsp;&nbsp;<br />
+CURLOPT_FOLLOWLOCATION: 设置这个选项为一个非零值(象 &ldquo;Location: &ldquo;)的头，服务器会把它当做HTTP头的一部分发送(注意这是递归的，PHP将发送形如 &ldquo;Location: &ldquo;的头)。&nbsp;&nbsp;<br />
+CURLOPT_PUT: 设置这个选项为一个非零值去用HTTP上传一个文件。要上传这个文件必须设置CURLOPT_INFILE和CURLOPT_INFILESIZE选项.&nbsp;&nbsp;<br />
+CURLOPT_MUTE: 设置这个选项为一个非零值，PHP对于CURL函数将完全沉默。&nbsp;&nbsp;<br />
+CURLOPT_TIMEOUT: 设置一个长整形数，作为最大延续多少秒。&nbsp;&nbsp;<br />
+CURLOPT_LOW_SPEED_LIMIT: 设置一个长整形数，控制传送多少字节。&nbsp;&nbsp;<br />
+CURLOPT_LOW_SPEED_TIME: 设置一个长整形数，控制多少秒传送CURLOPT_LOW_SPEED_LIMIT规定的字节数。&nbsp;&nbsp;<br />
+CURLOPT_RESUME_FROM: 传递一个包含字节偏移地址的长整形参数，(你想转移到的开始表单)。&nbsp;&nbsp;<br />
+CURLOPT_SSLVERSION: 传递一个包含SSL版本的长参数。默认PHP将被它自己努力的确定，在更多的安全中你必须手工设置。&nbsp;&nbsp;<br />
+CURLOPT_TIMECONDITION: 传递一个长参数，指定怎么处理CURLOPT_TIMEVALUE参数。你可以设置这个参数为TIMECOND_IFMODSINCE 或 TIMECOND_ISUNMODSINCE。这仅用于HTTP。&nbsp;&nbsp;<br />
+CURLOPT_TIMEVALUE: 传递一个从1970-1-1开始到现在的秒数。这个时间将被CURLOPT_TIMEVALUE选项作为指定值使用，或被默认TIMECOND_IFMODSINCE使用。&nbsp;&nbsp;<br />
+<span style="color: #999999;">下列选项的值将被作为字符串：　&nbsp;&nbsp;<br />
+CURLOPT_URL: 这是你想用PHP取回的URL地址。你也可以在用curl_init()函数初始化时设置这个选项。&nbsp;&nbsp;<br />
+CURLOPT_USERPWD: 传递一个形如[username]:[password]风格的字符串,作用PHP去连接。&nbsp;&nbsp;<br />
+CURLOPT_PROXYUSERPWD: 传递一个形如[username]:[password] 格式的字符串去连接HTTP代理。&nbsp;&nbsp;<br />
+CURLOPT_RANGE: 传递一个你想指定的范围。它应该是&rdquo;X-Y&rdquo;格式，X或Y是被除外的。HTTP传送同样支持几个间隔，用逗句来分隔(X-Y,N-M)。&nbsp;&nbsp;<br />
+CURLOPT_POSTFIELDS: 传递一个作为HTTP &ldquo;POST&rdquo;操作的所有数据的字符串。&nbsp;&nbsp;<br />
+CURLOPT_REFERER: 在HTTP请求中包含一个&rdquo;referer&rdquo;头的字符串。&nbsp;&nbsp;<br />
+CURLOPT_USERAGENT: 在HTTP请求中包含一个&rdquo;user-agent&rdquo;头的字符串。&nbsp;&nbsp;<br />
+CURLOPT_FTPPORT: 传递一个包含被ftp &ldquo;POST&rdquo;指令使用的IP地址。这个POST指令告诉远程服务器去连接我们指定的IP地址。这个字符串可以是一个IP地址，一个主机名，一个网络界面名(在UNIX下)，或是&lsquo;-&rsquo;(使用系统默认IP地址)。&nbsp;&nbsp;<br />
+CURLOPT_COOKIE: 传递一个包含HTTP cookie的头连接。&nbsp;&nbsp;<br />
+CURLOPT_SSLCERT: 传递一个包含PEM格式证书的字符串。&nbsp;&nbsp;<br />
+CURLOPT_SSLCERTPASSWD: 传递一个包含使用CURLOPT_SSLCERT证书必需的密码。&nbsp;&nbsp;<br />
+CURLOPT_COOKIEFILE: 传递一个包含cookie数据的文件的名字的字符串。这个cookie文件可以是Netscape格式，或是堆存在文件中的HTTP风格的头。&nbsp;&nbsp;<br />
+CURLOPT_CUSTOMREQUEST: 当进行HTTP请求时，传递一个字符被GET或HEAD使用。注意: 在确认你的服务器支持命令先不要去这样做。下列的选项要求一个文件描述(通过使用fopen()函数获得)：　&nbsp;&nbsp;<br />
+CURLOPT_FILE: 这个文件将是你放置传送的输出文件，默认是STDOUT.&nbsp;&nbsp;<br />
+CURLOPT_INFILE: 这个文件是你传送过来的输入文件。&nbsp;&nbsp;<br />
+CURLOPT_WRITEHEADER: 这个文件写有你输出的头部分。&nbsp;&nbsp;<br />
+CURLOPT_STDERR: 这个文件写有错误而不是stderr。用来获取需要登录的页面的例子,当前做法是每次或许都登录一次,有需要的人再做改进了.&nbsp; </span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+              <a href="/tags/%E5%A4%96%E6%8C%82/" rel="tag"># 外挂</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2008-10-30-ke-pu/" rel="prev" title="Tech Explained: What is Memcached?">
+                  <i class="fa fa-angle-left"></i> Tech Explained: What is Memcached?
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/" rel="next" title="I Wrote a Very Wicked Piece of Code">
+                  I Wrote a Very Wicked Piece of Code <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

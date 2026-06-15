@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="入门课程 主要记录python的数据类型和基本函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python学习笔记-1">
+<meta property="og:url" content="https://lfbear.com/zh-CN/2009-03-04-python-xue-xi-bi-ji-1/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="入门课程 主要记录python的数据类型和基本函数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2009-03-04T01:14:44.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.735Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lfbear.com/zh-CN/2009-03-04-python-xue-xi-bi-ji-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lfbear.com/zh-CN/2009-03-04-python-xue-xi-bi-ji-1/","path":"zh-CN/2009-03-04-python-xue-xi-bi-ji-1/","title":"python学习笔记-1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python学习笔记-1 | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小飞熊的窝</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <span class="lang-item active">简体中文</span>
+       <span class="lang-separator">|</span> 
+      
+        <a class="lang-item" href="/en/2009-03-04-python-xue-xi-bi-ji-1/">English</a>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/zh-CN/2009-03-04-python-xue-xi-bi-ji-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy —— 从网页少年到云原生老兵的碎碎念">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="python学习笔记-1 | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python学习笔记-1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-03-04 09:14:44" itemprop="dateCreated datePublished" datetime="2009-03-04T09:14:44+08:00">2009-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Professional-Thoughts/" itemprop="url" rel="index"><span itemprop="name">Professional Thoughts</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>入门课程 主要记录python的数据类型和基本函数</p>
+<p><span id="more"></span></p>
+<p>1.数据类型</p>
+<p>--------------------</p>
+<p>a.字典 Dictionary</p>
+<p>$定义</p>
+<p>d = {key1:value1,key2:value2....} 定义时使用{} key与value之间用:分隔，每一个元素都是一个 key-value 对，多个元素用,分隔。</p>
+<p>$约束</p>
+<p>key是唯一的(大小写敏感)，为已有key复制将覆盖原值；<br />
+字典中的元素是无序的；<br />
+字典中元素的值可以是任意数据类型。</p>
+<p>$操作</p>
+<p>赋值</p>
+<p>d['newkey'] = newvalue</p>
+<p>删除单个元素</p>
+<p>del d['newkey']</p>
+<p>清空字典</p>
+<p>d.clear()</p>
+<p>-----</p>
+<p>b.列表 List</p>
+<p>$定义(可理解为数组)</p>
+<p>l = [a,b,c....] 定义时使用[] 每个元素用,分隔。</p>
+<p>$约束</p>
+<p>元素是有序的<br />
+非空List第一个元素为l[0] 一个含有n个元素的List 最后一个元素为l[n-1] 或 l[-1]；<br />
+List允许索引为负值 负值是从尾部向前计数来取元素；<br />
+List中元素的值可以是任意数据类型。</p>
+<p>$分片</p>
+<p>指定2个索引值来得到List的子集，l[0:3] 返回 list 的前 3 个元素 : 前后索引均可省略，分别默认为0 和 -1。</p>
+<p>$操作</p>
+<p>增加</p>
+<p>l.append('new') 向list尾部增加一个元素。</p>
+<p>l.insert(1,'new') 指定索引增加一个元素，该元素后面的元素索引会自动向后移动一个位置。</p>
+<p>l.extend(["two", "elements"]) 连接2个List，注意extend的参数为list，新元素会在尾部。</p>
+<p>搜索</p>
+<p>l.index('a') 在 list 中查找一个值的首次出现并返回索引值，如果在 list 中没有找到值，Python 会引发一个异常。</p>
+<p>'a' in l 要测试一个值是否在 list 内，使用 in。如果值存在，它返回 True，否则返为 False 。</p>
+<p>删除</p>
+<p>l.remove('a') 删除首次出现的值</p>
+<p>l.pop() 删除最末尾的元素，并返回。</p>
+<p>List 运算</p>
+<p>+ 运算符连接起来相当于extend，但大型list使用extend会快一些<br />
+* 运算符 相当于将原来的list重复作用于新的list</p>
+<p>-----</p>
+<p>c.元组 Tuple 即为不可更改的List</p>
+<p>$定义</p>
+<p>t = ('a','b','c') 定义时使用() 每个元素用,分隔。</p>
+<p>$约束</p>
+<p>Tuple 不能使用增、删、查操作</p>
+<p>$好处</p>
+<p>Tuple 使用比List 快，适合存放常量<br />
+安全，可以转换为List，反之不可以<br />
+可以作为字典的key，List则不可以，以为List可变<br />
+Tuples 可以用在字符串格式化中</p>
+<p>--------------------<br />
+2.函数定义</p>
+<p>def function(parameter1,parameter2,...):<br />
+函数体需要缩进</p>
+<p>$一些有用的函数</p>
+<p>type 函数：返回任意对象的数据类型。<br />
+str 函数：将数据强制转换为字符串。<br />
+dir 函数：查看对象可进行的操作。<br />
+callable 函数：对象是否可以调用。<br />
+getattr 函数：获取对象引用，可用于分发，自省的核心。</p>
+<p>$其他知识</p>
+<p>python的内置函数在 __builtin__ 模块中</p>
+<p>学习教程：dive into python 一本很好的书</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2009-03-03-zui-e-de-dai-ma-xu-3/" rel="prev" title="A Very Wicked Piece of Code: Part 3 (Happy Farm)">
+                  <i class="fa fa-angle-left"></i> A Very Wicked Piece of Code: Part 3 (Happy Farm)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2009-03-04-python-xue-xi-bi-ji-1/" rel="next" title="Python Basics: Datatypes and Key Functions">
+                  Python Basics: Datatypes and Key Functions <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

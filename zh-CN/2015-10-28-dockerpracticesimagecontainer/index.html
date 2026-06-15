@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="关于docker的image和container，是docker初学者第一个比较困惑的概念。这里把关于image和container的一些使用心得分享出来，以便初学者能够快速了解。 本文旨在辅助初学者对docker的image和container做快速了解，并未对细节以及远离进行深入阐述，并由可能对真正的细节做了一些掩盖和曲解。了解更多，推荐阅读由Daniel Eklund的图解教程&nbsp;h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Practices --- image &amp; container">
+<meta property="og:url" content="https://lfbear.com/zh-CN/2015-10-28-dockerpracticesimagecontainer/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="关于docker的image和container，是docker初学者第一个比较困惑的概念。这里把关于image和container的一些使用心得分享出来，以便初学者能够快速了解。 本文旨在辅助初学者对docker的image和container做快速了解，并未对细节以及远离进行深入阐述，并由可能对真正的细节做了一些掩盖和曲解。了解更多，推荐阅读由Daniel Eklund的图解教程&nbsp;h">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-10-28T03:09:31.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.737Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="container">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="image">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lfbear.com/zh-CN/2015-10-28-dockerpracticesimagecontainer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lfbear.com/zh-CN/2015-10-28-dockerpracticesimagecontainer/","path":"zh-CN/2015-10-28-dockerpracticesimagecontainer/","title":"Docker Practices --- image & container"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker Practices --- image & container | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小飞熊的窝</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <span class="lang-item active">简体中文</span>
+       <span class="lang-separator">|</span> 
+      
+        <a class="lang-item" href="/en/2015-10-28-dockerpracticesimagecontainer/">English</a>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1.image （这里译为镜像）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">2.container （这里译为容器）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">3.如何对待镜像和容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">4、容器，镜像和静态文件的相互转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">#文献参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/zh-CN/2015-10-28-dockerpracticesimagecontainer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy —— 从网页少年到云原生老兵的碎碎念">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker Practices --- image & container | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker Practices --- image & container
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-10-28 11:09:31" itemprop="dateCreated datePublished" datetime="2015-10-28T11:09:31+08:00">2015-10-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Professional-Thoughts/" itemprop="url" rel="index"><span itemprop="name">Professional Thoughts</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>关于docker的image和container，是docker初学者第一个比较困惑的概念。这里把关于image和container的一些使用心得分享出来，以便初学者能够快速了解。</p>
+<p>本文旨在辅助初学者对docker的image和container做快速了解，并未对细节以及远离进行深入阐述，并由可能对真正的细节做了一些掩盖和曲解。了解更多，推荐阅读由Daniel Eklund的图解教程&nbsp;http://merrigrove.blogspot.hk/2015/10/visualizing-docker-containers-and-images.html，也是本文的参考文献之一（可能需要搭梯阅读）</p>
+<span id="more"></span>
+<h3>1.image （这里译为镜像）</h3>
+<p>官方是这么解释image的：是container（译为容器）的基础，裸系统之上的<strong>每层文件系统变更</strong>的<strong>存档</strong>，镜像没有状态，也不会自己改变。</p>
+<p><span style="color: #999999;"><em>原文：Docker images are the basis of containers. An Image is an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime. An image typically contains a union of layered filesystems stacked on top of each other. An image does not have state and it never changes.</em></span></p>
+<p>在我看来，可以用虚拟机镜像来理解这个，我们平时使用虚拟机（无论是virtualbox还是VMware），都可以将之上装好的系统以文件的形式分享给别人。可以理解这个文件的形式就是镜像。当然docker的镜像细节上于它们还是有区别的，docker的镜像天然有版本信息在里面，每次容器的commit和save都会记录进去。</p>
+<p>像&ldquo;洋葱皮&rdquo;一样，每save一次，外层就多了一层皮。很多docker初学者常常会迷惑一个问题，为什么image的尺寸（size）越来越大呢，做一些清理操作对尺寸也没什么影响。原因就是，新的洋葱皮只能在外面包（这里只是用洋葱这种植物举例，并非和洋葱的生长特性相同），每次都是增量保存文件系统的变更，而不是最终的状态。这样做的好处就是，方便你回退。</p>
+<h3></h3>
+<h3>2.container （这里译为容器）</h3>
+<p>还是先来官方解释：是image（镜像）的运行实例，由镜像、运行环境和标准指令构成。概念借鉴于集装箱，集装箱是将全球船运标准化，docker的容器是定义<strong>一个软件承载方式的标准化</strong>。</p>
+<p><span style="color: #999999;"><em>原文：A container is a runtime instance of a docker image.</em></span></p>
+<p><span style="color: #999999;"><em>A Docker container consists of a Docker image, execution environment and standard set of instructions</em></span><br />
+<span style="color: #999999;"><em>The concept is borrowed from Shipping Containers, which define a standard to ship goods globally. Docker defines a standard to ship software.</em></span></p>
+<p>IMO，容器就是镜像的实例，一个动态的，运行时的东西，类似与高级语言中 new class。</p>
+<p>但一定要记得，容器的特性决定了容器是一个随时可被销毁/替换的东西，一定不要指望把稳定的服务搭建在一个容器里（他们应该已经静态化到了镜像中，容器启动就可以启动服务）</p>
+<p>另外：业务数据<strong>一定不要</strong>放到容器里，用docker的数据卷，这样在容器销毁的时候，数据还能保存下来，并且被另外一个替换容器继续使用。</p>
+<h3>3.如何对待镜像和容器</h3>
+<p>试想，如何你在电脑上写一本小说，当你觉得某一张终于写完了，为了对得起脑力的释放和体力的劳累，这时候必须要把这个文件保存起来。这个时候，你就应该考虑是不是要把容器保存成镜像了。docker&nbsp;commit 你的容器，并且save成镜像。</p>
+<p>第二天，你又有了新的灵感，想要继续写作了。就在此时：</p>
+<p>a.电脑没关，昨天那小说还在编辑状态：继续进入那个容器（start启动 或者 直接是exec执行命令）</p>
+<p>b.电脑关掉了，开机并且找到那个小说的文件，打开继续写：容器被删除了，只能由 docker run命令再次生成一个。</p>
+<p>上面的例子应该会对你有些启发吧，其实就是运行时和静态化的关系，如果想要运行，那就使用容器，想要做静态化保存为镜像。</p>
+<h3></h3>
+<h3>4、容器，镜像和静态文件的相互转换</h3>
+<p><strong>a. 容器 - 镜像 - 文件</strong></p>
+<p>导出：容器 <span style="color: #800080;">--[commit]--></span> 镜像 <span style="color: #800080;">--[save]--></span> .tar文件</p>
+<p><em>commit 用法：sudo docker commit [容器名] [镜像名称]&nbsp;</em></p>
+<p><em>save 用法：docker save -o&nbsp;[文件名].tar&nbsp;[镜像名称]</em></p>
+<p>导入：容器 <span style="color: #3366ff;"><--[run]--</span> 镜像 <span style="color: #3366ff;"><--[load]--</span> .tar文件</p>
+<p><em>run 用法：sudo docker run -t -i &nbsp;[镜像名称] /bin/bash</em></p>
+<p><em>load 用法：sudo docker load <&nbsp;[文件名].tar</em></p>
+<p><strong>b.容器 - 文件 - 镜像</strong></p>
+<p>容器 &nbsp;<span style="color: #808000;">--[export]--></span> 文件 <span style="color: #808000;">--[import]--></span> 镜像</p>
+<p><em>export 用法：sudo&nbsp;docker export [容器ID或名称]&nbsp;> [文件名].tar</em></p>
+<p><em>import 用法：cat [文件名].tar | sudo&nbsp;docker import -&nbsp;[镜像名称]</em></p>
+<p>&nbsp;</p>
+<h3>#文献参考</h3>
+<p>a.Visualizing Docker Containers and Images &nbsp;http://merrigrove.blogspot.hk/2015/10/visualizing-docker-containers-and-images.html</p>
+<p>b.官方文档&nbsp;https://docs.docker.com/</p>
+<p>c.《Docker 从入门到实践》线上版本 &nbsp;http://dockerpool.com/static/books/docker_practice/index.html</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+              <a href="/tags/image/" rel="tag"># image</a>
+              <a href="/tags/container/" rel="tag"># container</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2015-10-22-zui-hou-1km-mei-xiang-xiang-de-na-me-jian-dan/" rel="prev" title="The Last Mile is Never as Simple as It Seems">
+                  <i class="fa fa-angle-left"></i> The Last Mile is Never as Simple as It Seems
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2015-10-28-dockerpracticesimagecontainer/" rel="next" title="Docker in Practice: Demystifying Images & Containers">
+                  Docker in Practice: Demystifying Images & Containers <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

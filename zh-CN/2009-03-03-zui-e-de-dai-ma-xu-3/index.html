@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="继2段罪恶的代码后，这次是校内最近比较热门的游戏，开心农场。依旧先说在前面：本段代码仅供学习研究使用，请不要部署到服务器端供浏览器用户非法使用，否则后果自负！请尊重游戏开发人员的辛勤劳动！ [2009-04-27]开心农场发布紧急通知，打击使用外挂的玩家。本次学习研究并非为了发布可用的外挂程序来取悦玩家，但程序的确实现的&ldquo;外挂&rdquo;的功能。为了防止本文引起不必要的法律纠纷，现关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="罪恶的代码-续3">
+<meta property="og:url" content="https://lfbear.com/zh-CN/2009-03-03-zui-e-de-dai-ma-xu-3/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="继2段罪恶的代码后，这次是校内最近比较热门的游戏，开心农场。依旧先说在前面：本段代码仅供学习研究使用，请不要部署到服务器端供浏览器用户非法使用，否则后果自负！请尊重游戏开发人员的辛勤劳动！ [2009-04-27]开心农场发布紧急通知，打击使用外挂的玩家。本次学习研究并非为了发布可用的外挂程序来取悦玩家，但程序的确实现的&ldquo;外挂&rdquo;的功能。为了防止本文引起不必要的法律纠纷，现关">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lfbear.com/assets/images/2009/03/happyfarm-demo.gif">
+<meta property="article:published_time" content="2009-03-03T00:51:00.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.735Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="外挂">
+<meta property="article:tag" content="开心农场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lfbear.com/assets/images/2009/03/happyfarm-demo.gif">
+
+
+<link rel="canonical" href="https://lfbear.com/zh-CN/2009-03-03-zui-e-de-dai-ma-xu-3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lfbear.com/zh-CN/2009-03-03-zui-e-de-dai-ma-xu-3/","path":"zh-CN/2009-03-03-zui-e-de-dai-ma-xu-3/","title":"罪恶的代码-续3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>罪恶的代码-续3 | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小飞熊的窝</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <span class="lang-item active">简体中文</span>
+       <span class="lang-separator">|</span> 
+      
+        <a class="lang-item" href="/en/2009-03-03-zui-e-de-dai-ma-xu-3/">English</a>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy —— 从网页少年到云原生老兵的碎碎念</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/zh-CN/2009-03-03-zui-e-de-dai-ma-xu-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy —— 从网页少年到云原生老兵的碎碎念">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="罪恶的代码-续3 | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          罪恶的代码-续3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-03-03 08:51:00" itemprop="dateCreated datePublished" datetime="2009-03-03T08:51:00+08:00">2009-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Developer-Life/" itemprop="url" rel="index"><span itemprop="name">Developer Life</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>继2段罪恶的代码后，这次是校内最近比较热门的游戏，开心农场。依旧先说在前面：本段代码仅供学习研究使用，请不要部署到服务器端供浏览器用户非法使用，否则后果自负！请尊重游戏开发人员的辛勤劳动！</p>
+<p><span style="color: #ff0000;">[2009-04-27]开心农场发布紧急通知，打击使用外挂的玩家。本次学习研究并非为了发布可用的外挂程序来取悦玩家，但程序的确实现的&ldquo;外挂&rdquo;的功能。为了防止本文引起不必要的法律纠纷，现关闭本文的评论功能，停止更新程序（目前程序已不可使用），望大家谅解。非针对&ldquo;开心农场&rdquo;游戏的学习与交流还会继续，请注意文末的交流方式。</span></p>
+<p><span id="more"></span></p>
+<p>[caption id="attachment_278" align="aligncenter" width="663" caption="程序运行截图"]<a href="/assets/images/2009/03/happyfarm-demo.gif"><img class="size-full wp-image-278" title="happyfarm-demo" src="/assets/images/2009/03/happyfarm-demo.gif" alt="程序运行截图" width="663" height="591" /></a>[/caption]</p>
+<p>除不可以自动卖掉仓库里的果实以外(自己卖掉果实才有成就感嘛)，其他功能全部支持。这次先讲怎么使用，给大家一个感性上的认识，然后才有兴趣和动力去深入理性学习和研究嘛~</p>
+<p>使用前请先下载<a title="php运行库" href="/assets/images/php_run_lib.rar" target="_blank"><span style="color: #0000cc;">php运行库</span></a>，然后下载程序代码：happyfarm&nbsp;[目前停止下载] <span style="color: #008000;">(版本:v0.6 alpha&nbsp;| update:2009-04-02 | md5: 812a81ef79d61befc026316583e77758 | 更新内容:结合开心农场改版，将几个url做了变更，并将整个流程做了优化) </span>将程序解压后放置于php运行库的program目录下，使得happyfarm目录与bin目录同级 ，然后配置参数文件，和抢车位的一样， myinfo.ini 和 friend.ini 中(配置文件中附有注释，记得用写字板别用记事本，否则会出乱码，熊熊用的是editplus 很方便很大众的编辑器) 配置好以后，就可以使用啦！</p>
+<p>貌似说的简单哦~ 其实很多人可能会卡到配置文件这一关，呵呵，别心急，让熊熊来教大家，下面是知识时间哦~</p>
+<p>配置参数文件myinfo.ini 中除去 ownerid(开心农场id) 其他大家应该很快就完成了，开心农场id 这个怎么弄呢，首先登录校内，打开开心农场的页面，然后点击右键，选择查看源文件。这里是校内开心农场首页的源代码，然后搜索&ldquo; a23163_app.xn_data= &rdquo;你会发现xn_user:后面跟着一串数字，这就是你的ownerid(开心农场id)&nbsp;，先不要太心急，大家知道这段代码是什么吗，这就是传说中的js，有兴趣的同学可以看一下，这段js中的数据会在开心农场的flash里面用得到哦，呵呵，第一阶段ok了，可以把自己的id放到配置文件中，用 happyfarm.bat 来运行外挂了(ps:这段bat其他没什么神奇的 就是用php库来运行php脚本，而bin文件夹下放的就是php库，请务必保持happyfarm这个文件夹与bin文件夹同级哦，否则就调不到php库文件了)</p>
+<p>下面要做的是配置好友信息，否则怎么去偷好友的东西呀。首先你需要下载一个firefox，哦？ 你还没有这个，那怎么当web程序员呀，这个可是web程序员必不可少的浏览器哦，然后安装firebug插件。这个如果没安装过可以网上搜一下，很简单的。同样用firefox打开校内，登录，来到开心农场页，打开firebug，开始抓包(对抓包感兴趣的同学可以学习一下网络基础教程)，不绕弯子了，点开好友侧边栏，这时最好先清除一下firebug里面的记录，然后随便点一个好友的头像，会发现有一个post到<a target="_blank" rel="noopener" href="http://happyfarm.fivminutes.com/api.php?mod=user&amp;act=run&amp;flag=1&amp;new=1&amp;farmKey">http://*/api.php?mod=user&amp;act=run&amp;flag=1&amp;new=1&amp;farmKey=</a>..... 这个url 的包发出去了，这是点击post的数据 会有 ownerId=xxxxxx 这个xxxxxx就是刚刚点击那个好友的uid咯，把这个好友的信息配到friend.ini 中吧，xxxx = 好友名字 就可以了 多条换行。有人会问了，怎么不自动抓取自己的uid和好友的uid呢，其实做到这个也不难，但是那样还有学习的乐趣和意义了嘛？记住，我们是在学习知识哦~</p>
+<p>配置好了，喜欢程序的人就可以用编辑器(不是记事本哦) 打开happyfarm.php 看到&ldquo;游戏参数配置 Configuration I&rdquo;了吗，可以修改这里，让程序更加个性化为你服务哦~ 然后慢慢的，有c语言基础的同学们可以试着改改代码哦~ 熊熊的代码写的不好，请见谅哦(都是上班时候偷偷写的，只顾速度了) 总之呢，了解的越多，就能从这个小程序里面挖掘更多的知识，为己所用。</p>
+<p>好了，先到这里吧，有问题的同学多多与我交流哦，希望听到大家的批评指正！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+              <a href="/tags/%E5%A4%96%E6%8C%82/" rel="tag"># 外挂</a>
+              <a href="/tags/%E5%BC%80%E5%BF%83%E5%86%9C%E5%9C%BA/" rel="tag"># 开心农场</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/en/2009-03-02-zhuan-zai-zhi-zhu-he-wang-de-gu-shi/" rel="prev" title="[Repost] The Story of the Spider and the Web">
+                  <i class="fa fa-angle-left"></i> [Repost] The Story of the Spider and the Web
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/en/2009-03-03-zui-e-de-dai-ma-xu-3/" rel="next" title="A Very Wicked Piece of Code: Part 3 (Happy Farm)">
+                  A Very Wicked Piece of Code: Part 3 (Happy Farm) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

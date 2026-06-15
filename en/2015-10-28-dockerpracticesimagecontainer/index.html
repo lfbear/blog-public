@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Understanding Docker’s images and containers is often the very first hurdle for beginners. In this post, I’ll share some of my hands-on insights to help newcomers wrap their heads around these concept">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker in Practice: Demystifying Images &amp; Containers">
+<meta property="og:url" content="https://lfbear.com/en/2015-10-28-dockerpracticesimagecontainer/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="Understanding Docker’s images and containers is often the very first hurdle for beginners. In this post, I’ll share some of my hands-on insights to help newcomers wrap their heads around these concept">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-10-28T03:09:31.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.731Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="container">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="image">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lfbear.com/en/2015-10-28-dockerpracticesimagecontainer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://lfbear.com/en/2015-10-28-dockerpracticesimagecontainer/","path":"en/2015-10-28-dockerpracticesimagecontainer/","title":"Docker in Practice: Demystifying Images & Containers"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker in Practice: Demystifying Images & Containers | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Cub's Lair</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about">
+
+    <a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <a class="lang-item" href="/2015-10-28-dockerpracticesimagecontainer/">简体中文</a>
+       <span class="lang-separator">|</span> 
+      
+        <span class="lang-item active">English</span>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Image"><span class="nav-number">1.</span> <span class="nav-text">1. Image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Container"><span class="nav-number">2.</span> <span class="nav-text">2. Container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-How-to-Approach-Images-and-Containers"><span class="nav-number">3.</span> <span class="nav-text">3. How to Approach Images and Containers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Converting-Between-Containers-Images-and-Files"><span class="nav-number">4.</span> <span class="nav-text">4. Converting Between Containers, Images, and Files</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Container-Image-File-tar"><span class="nav-number">4.1.</span> <span class="nav-text">A. Container -&gt; Image -&gt; File (.tar)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Container-File-Image"><span class="nav-number">4.2.</span> <span class="nav-text">B. Container -&gt; File -&gt; Image</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/en/2015-10-28-dockerpracticesimagecontainer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker in Practice: Demystifying Images & Containers | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker in Practice: Demystifying Images & Containers
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-10-28 11:09:31" itemprop="dateCreated datePublished" datetime="2015-10-28T11:09:31+08:00">2015-10-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Professional-Thoughts/" itemprop="url" rel="index"><span itemprop="name">Professional Thoughts</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Understanding Docker’s <strong>images</strong> and <strong>containers</strong> is often the very first hurdle for beginners. In this post, I’ll share some of my hands-on insights to help newcomers wrap their heads around these concepts quickly.</p>
+<p><em>Note: This post is a quick-start guide to help beginners build intuition, not a deep academic dive into the inner workings of Docker. As such, some advanced details may be simplified or glossed over for clarity. For a more comprehensive look, I highly recommend checking out Daniel Eklund’s illustrated guide: <a target="_blank" rel="noopener" href="http://merrigrove.blogspot.hk/2015/10/visualizing-docker-containers-and-images.html">Visualizing Docker Containers and Images</a>, which is one of the main references for this post (you might need a VPN&#x2F;proxy to access it).</em></p>
+<span id="more"></span>
+
+<h3 id="1-Image"><a href="#1-Image" class="headerlink" title="1. Image"></a>1. Image</h3><p>Here is the official definition: An image is the foundation of a container. It is a read-only template that contains a set of layered filesystems stacked on top of each other, archiving <strong>every filesystem change</strong> on top of a base OS. An image does not have state and never changes.</p>
+<blockquote>
+<p><em>Original:</em><br><em>Docker images are the basis of containers. An Image is an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime. An image typically contains a union of layered filesystems stacked on top of each other. An image does not have state and it never changes.</em></p>
+</blockquote>
+<p>Personally, I like to compare it to a virtual machine (VM) image. When using a VM (whether in VirtualBox or VMware), you can export and share your configured system as a single file. That file is essentially an image. Of course, Docker images differ under the hood; they natively keep track of version histories, capturing every container <code>commit</code> and <code>save</code> inside their layers.</p>
+<p>Think of it like onion layers: every time you perform a write operation and commit it, a new layer is wrapped around the outside. A common question among Docker beginners is: <em>“Why is my image size ballooning, and why doesn’t running clean-up scripts reduce the size?”</em> The reason is that new layers are strictly additive. You are saving the <em>deltas</em> (changes) on top of the old state, not rewriting the final snapshot from scratch. While this makes your images larger, the huge benefit is that you can easily roll back to any previous state!</p>
+<h3 id="2-Container"><a href="#2-Container" class="headerlink" title="2. Container"></a>2. Container</h3><p>Let’s look at the official definition first: A container is a runtime instance of an image. It consists of the image, the execution environment, and a standard set of instructions. The concept is heavily borrowed from shipping containers, which standardized global transport. Docker containers define a <strong>standard way to package and ship software</strong>.</p>
+<blockquote>
+<p><em>Original:</em><br><em>A container is a runtime instance of a docker image.</em><br><em>A Docker container consists of a Docker image, execution environment and standard set of instructions.</em><br><em>The concept is borrowed from Shipping Containers, which define a standard to ship goods globally. Docker defines a standard to ship software.</em></p>
+</blockquote>
+<p>In my opinion, a container is just an active instance of an image—a dynamic, living runtime process. Think of it like instantiating an object (<code>new MyClass()</code>) in high-level programming languages.</p>
+<p>However, keep in mind that containers are designed to be ephemeral—they can be destroyed or replaced at any moment. <strong>Never</strong> attempt to configure a stable, persistent service directly inside a running container (such services should be baked statically into the image so they spin up automatically when the container starts).</p>
+<p>Furthermore, <strong>never</strong> store business or application data inside the container’s own filesystem. Instead, use Docker volumes. That way, when the container is deleted, your data remains safely preserved on the host and can easily be attached to a replacement container.</p>
+<h3 id="3-How-to-Approach-Images-and-Containers"><a href="#3-How-to-Approach-Images-and-Containers" class="headerlink" title="3. How to Approach Images and Containers"></a>3. How to Approach Images and Containers</h3><p>Imagine you are writing a novel on your computer. When you finally finish a chapter, to make sure all your hard work is safe, you save the file. In Docker terms, this is when you should commit your container’s state to a static image: you run <code>docker commit</code> and <code>save</code> it.</p>
+<p>The next day, you get a burst of inspiration and want to keep writing. Here are your two paths:</p>
+<ul>
+<li><strong>Path A (Computer stayed on, novel is still open in the editor)</strong>: You jump back into your existing container (using <code>docker start</code> or <code>docker exec</code>).</li>
+<li><strong>Path B (Computer was turned off, you boot up and open the file again)</strong>: The temporary container is gone, so you spin up a brand new one from your saved image using <code>docker run</code>.</li>
+</ul>
+<p>This analogy highlights the relationship between the dynamic runtime (container) and static storage (image). If you want to run your app, use a container; if you want to freeze the state and save it, build an image.</p>
+<h3 id="4-Converting-Between-Containers-Images-and-Files"><a href="#4-Converting-Between-Containers-Images-and-Files" class="headerlink" title="4. Converting Between Containers, Images, and Files"></a>4. Converting Between Containers, Images, and Files</h3><h4 id="A-Container-Image-File-tar"><a href="#A-Container-Image-File-tar" class="headerlink" title="A. Container -&gt; Image -&gt; File (.tar)"></a>A. Container -&gt; Image -&gt; File (.tar)</h4><ul>
+<li><strong>Exporting:</strong> Container <code>--[commit]--&gt;</code> Image <code>--[save]--&gt;</code> <code>.tar</code> file<ul>
+<li><em>Commit:</em> <code>sudo docker commit [container_name] [image_name]</code></li>
+<li><em>Save:</em> <code>docker save -o [filename].tar [image_name]</code></li>
+</ul>
+</li>
+<li><strong>Importing:</strong> Container <code>&lt;--[run]--</code> Image <code>&lt;--[load]--</code> <code>.tar</code> file<ul>
+<li><em>Run:</em> <code>sudo docker run -t -i [image_name] /bin/bash</code></li>
+<li><em>Load:</em> <code>sudo docker load &lt; [filename].tar</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="B-Container-File-Image"><a href="#B-Container-File-Image" class="headerlink" title="B. Container -&gt; File -&gt; Image"></a>B. Container -&gt; File -&gt; Image</h4><ul>
+<li>Container <code>--[export]--&gt;</code> <code>.tar</code> file <code>--[import]--&gt;</code> Image<ul>
+<li><em>Export:</em> <code>sudo docker export [container_id_or_name] &gt; [filename].tar</code></li>
+<li><em>Import:</em> <code>cat [filename].tar | sudo docker import - [image_name]</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ol>
+<li><strong>Visualizing Docker Containers and Images</strong>: <a target="_blank" rel="noopener" href="http://merrigrove.blogspot.hk/2015/10/visualizing-docker-containers-and-images.html">http://merrigrove.blogspot.hk/2015/10/visualizing-docker-containers-and-images.html</a></li>
+<li><strong>Docker Official Documentation</strong>: <a target="_blank" rel="noopener" href="https://docs.docker.com/">https://docs.docker.com/</a></li>
+<li><strong>Docker - From Beginner to Practice (Chinese)</strong>: <a target="_blank" rel="noopener" href="http://dockerpool.com/static/books/docker_practice/index.html">http://dockerpool.com/static/books/docker_practice&#x2F;index.html</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+              <a href="/tags/image/" rel="tag"># image</a>
+              <a href="/tags/container/" rel="tag"># container</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/zh-CN/2015-10-28-dockerpracticesimagecontainer/" rel="prev" title="Docker Practices --- image & container">
+                  <i class="fa fa-angle-left"></i> Docker Practices --- image & container
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/zh-CN/2016-01-07-yi-bu-hao-pian-zi-shi-er-gong-min/" rel="next" title="一部好片子，十二公民">
+                  一部好片子，十二公民 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

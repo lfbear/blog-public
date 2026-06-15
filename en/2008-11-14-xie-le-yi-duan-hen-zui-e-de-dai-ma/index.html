@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lfbear.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="To be honest, as a game developer, I absolutely despise game exploits and bots (外挂) because they ruin all the fun and cause games to die out prematurely. I really didn’t want to go down this road, but">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I Wrote a Very Wicked Piece of Code">
+<meta property="og:url" content="https://lfbear.com/en/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/index.html">
+<meta property="og:site_name" content="小飞熊的窝">
+<meta property="og:description" content="To be honest, as a game developer, I absolutely despise game exploits and bots (外挂) because they ruin all the fun and cause games to die out prematurely. I really didn’t want to go down this road, but">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-11-13T18:47:29.000Z">
+<meta property="article:modified_time" content="2026-06-15T12:15:47.728Z">
+<meta property="article:author" content="lfbear (小飞熊)">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="外挂">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lfbear.com/en/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://lfbear.com/en/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/","path":"en/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/","title":"I Wrote a Very Wicked Piece of Code"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>I Wrote a Very Wicked Piece of Code | 小飞熊的窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">The Cub's Lair</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home">
+
+    <a href="/en/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about">
+
+    <a href="/en/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags">
+
+    <a href="/en/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories">
+
+    <a href="/en/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives">
+
+    <a href="/en/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+  <div class="languages">
+    <i class="fa fa-language"></i>
+    
+      
+        <a class="lang-item" href="/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/">简体中文</a>
+       <span class="lang-separator">|</span> 
+      
+        <span class="lang-item active">English</span>
+      
+  </div>
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#curl-setopt-Option-Reference"><span class="nav-number">1.</span> <span class="nav-text">curl_setopt Option Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lfbear (小飞熊)"
+      src="/assets/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">lfbear (小飞熊)</p>
+  <div class="site-description" itemprop="description">Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">122</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://lfbear.com/en/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/images/avatar.jpeg">
+      <meta itemprop="name" content="lfbear (小飞熊)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小飞熊的窝">
+      <meta itemprop="description" content="Be myself, be happy — An engibear's journey through Cloud Native, AI, and life.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="I Wrote a Very Wicked Piece of Code | 小飞熊的窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          I Wrote a Very Wicked Piece of Code
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2008-11-14 02:47:29" itemprop="dateCreated datePublished" datetime="2008-11-14T02:47:29+08:00">2008-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-06-15 20:15:47" itemprop="dateModified" datetime="2026-06-15T20:15:47+08:00">2026-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Developer-Life/" itemprop="url" rel="index"><span itemprop="name">Developer Life</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>To be honest, as a game developer, I absolutely despise game exploits and bots (外挂) because they ruin all the fun and cause games to die out prematurely. I really didn’t want to go down this road, but my slot machine account was completely broke, so I was forced to write a bot for it. Since yours truly (熊熊 - Beary) is the author of this slot machine app, I won’t be posting the complete code here (P.S. If everyone starts exploiting my slot machine, I’ll probably get assigned the task of adding anti-cheat mechanisms. Gotta save myself some extra work, hehe!). However, I <em>will</em> teach you guys how to write a bot for web games using PHP.</p>
+<span id="more"></span>
+
+<p>Conceptually, game bots are actually very simple: you’re just writing code to let a machine replace a human to perform repetitive, predictable actions. So while a bot is a godsend for gamers, for programmers it’s just a little helper to give ourselves a break, haha~ (Below is the core logic of my bot program):</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ch</span> = <span class="title function_ invoke__">curl_init</span>();      </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_REFERER, <span class="string">&#x27;http://xxx&#x27;</span>);  </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_URL, <span class="string">&#x27;http://yyy&#x27;</span>);   </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_POST, <span class="number">1</span>);  </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_POSTFIELDS, <span class="variable">$postdata</span>);      </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_COOKIEFILE, <span class="variable">$cookiefile</span>);      </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);      </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HEADER, <span class="literal">false</span>);      </span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_NOBODY, <span class="literal">false</span>);      </span><br><span class="line"><span class="variable">$re</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$ch</span>);      </span><br><span class="line"><span class="title function_ invoke__">curl_close</span>(<span class="variable">$ch</span>);    </span><br></pre></td></tr></table></figure>
+
+<p>Getting back to business—in PHP, we primarily use the cURL library to spoof a browser, making frequent, patterned requests to specific scripts. The cURL workflow starts with <code>curl_init()</code>, configures spoofing parameters using <code>curl_setopt()</code>, executes the request via <code>curl_exec()</code>, and finally wraps up with <code>curl_close()</code>. Isn’t the workflow simple? I’ll append a list of common <code>curl_setopt</code> options along with their explanations at the end of this post (since <code>setopt</code> does most of the heavy lifting for spoofing). It can spoof logins and mimic almost any human action. It’s incredibly powerful!~</p>
+<p>Web-based social games are usually built around you and your friends, so step one is fetching your friend list. This is typically done by sniffing the network traffic using Firefox paired with Firebug. Once you grab the data, clean it up and format it with a specific delimiter. OK, now that the program knows who you’re playing with, the next step is using Firefox + Firebug again to capture the actual endpoint URL—specifically, the script where game actions are submitted (which I’ll refer to as the “main game script”). </p>
+<p>You’ll target that URL using line 3 in the snippet above, and use lines 4 and 5 to send your POST data (e.g., <code>$postdata = &#39;act=play&amp;money=123&amp;...&#39;</code> where multiple parameters are joined by ampersands). If it’s a GET request, it’s even simpler—just append the query parameters directly to the URL. </p>
+<p>Line 7 (<code>CURLOPT_RETURNTRANSFER</code>) is responsible for returning the server’s response into <code>$re</code>, allowing us to parse the response and decide what to do next. <em>Note: Server responses are usually encoded. Common formats include JSON, XML, or serialized PHP arrays, so remember to decode them before parsing!</em></p>
+<p>You might be wondering about the purpose of lines 2 and 6. These are the core spoofing layers. Line 2 (<code>CURLOPT_REFERER</code>) mocks the referrer header; main game scripts often check this to ensure the request originated from an authorized game page. Line 6 (<code>CURLOPT_COOKIEFILE</code>) loads the cookies of an authenticated session (likewise, you can capture cookies in a script by adding <code>curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiefile);</code>). This tells the main game script that you are indeed a logged-in user.</p>
+<p>That’s the general process! The rest is just wrapping this snippet in a loop (to iterate over all your friends), handling response assertions, adjusting parameters, or redirecting as needed. Different web games might employ different filters or validation checks, so I highly recommend playing through the game once while logging the entire flow in Firebug before writing any bot code. Otherwise, it’s very easy to run into roadblocks!~</p>
+<p>If there’s anything I didn’t explain clearly, feel free to drop a comment and chat tech with yours truly! Below is a list of commonly used <code>curl_setopt</code> parameters (sourced from the web, shoutout to the original translator):</p>
+<h3 id="curl-setopt-Option-Reference"><a href="#curl-setopt-Option-Reference" class="headerlink" title="curl_setopt Option Reference"></a>curl_setopt Option Reference</h3><p><code>bool curl_setopt (int ch, string option, mixed value)</code></p>
+<p>The <code>curl_setopt()</code> function sets an option for a cURL session. The <code>option</code> parameter is the setting you want, and <code>value</code> is the value given to this option.</p>
+<p><strong>The following options expect integer&#x2F;boolean values:</strong></p>
+<ul>
+<li><strong>CURLOPT_INFILESIZE</strong>: When uploading a file to a remote site, this option tells PHP the size of the uploaded file.</li>
+<li><strong>CURLOPT_VERBOSE</strong>: Set this to a non-zero value if you want cURL to report every event&#x2F;detail.</li>
+<li><strong>CURLOPT_HEADER</strong>: Set this to a non-zero value if you want to include headers in the output.</li>
+<li><strong>CURLOPT_NOPROGRESS</strong>: Set this to a non-zero value if you don’t want PHP to display a progress bar for cURL transfers. Note: PHP sets this to non-zero by default; you should only change it for debugging purposes.</li>
+<li><strong>CURLOPT_NOBODY</strong>: Set this to a non-zero value if you don’t want to include the body in the output.</li>
+<li><strong>CURLOPT_FAILONERROR</strong>: Set this to a non-zero value if you want PHP to fail silently on errors (HTTP status code &gt;&#x3D; 300). The default behavior returns the normal page, ignoring the error code.</li>
+<li><strong>CURLOPT_UPLOAD</strong>: Set this to a non-zero value if you want PHP to prepare for an upload.</li>
+<li><strong>CURLOPT_POST</strong>: Set this to a non-zero value if you want PHP to perform a regular HTTP POST. This POST uses the standard <code>application/x-www-form-urlencoded</code> format, typically used by HTML forms.</li>
+<li><strong>CURLOPT_FTPLISTONLY</strong>: Set this to a non-zero value to list only directory names for FTP.</li>
+<li><strong>CURLOPT_FTPAPPEND</strong>: Set this to a non-zero value to append to the remote file instead of overwriting it.</li>
+<li><strong>CURLOPT_NETRC</strong>: Set this to a non-zero value to make PHP look up credentials in your <code>~/.netrc</code> file for the remote connection.</li>
+<li><strong>CURLOPT_FOLLOWLOCATION</strong>: Set this to a non-zero value to follow “Location:” headers sent by the server (note that this is recursive; PHP will follow redirects).</li>
+<li><strong>CURLOPT_PUT</strong>: Set this to a non-zero value to upload a file via HTTP. To upload the file, the <code>CURLOPT_INFILE</code> and <code>CURLOPT_INFILESIZE</code> options must also be set.</li>
+<li><strong>CURLOPT_MUTE</strong>: Set this to a non-zero value to suppress all cURL outputs in PHP.</li>
+<li><strong>CURLOPT_TIMEOUT</strong>: Set a long integer value specifying the maximum number of seconds to allow cURL functions to execute.</li>
+<li><strong>CURLOPT_LOW_SPEED_LIMIT</strong>: Set a long integer controlling the minimum transfer speed in bytes per second.</li>
+<li><strong>CURLOPT_LOW_SPEED_TIME</strong>: Set a long integer specifying the number of seconds the speed must be below <code>CURLOPT_LOW_SPEED_LIMIT</code> before aborting.</li>
+<li><strong>CURLOPT_RESUME_FROM</strong>: Pass a long integer specifying the byte offset to resume the transfer from.</li>
+<li><strong>CURLOPT_SSLVERSION</strong>: Pass a long integer containing the SSL version. By default, PHP will try to determine this automatically, but for tighter security, you can set it manually.</li>
+<li><strong>CURLOPT_TIMECONDITION</strong>: Pass a long integer specifying how to handle the <code>CURLOPT_TIMEVALUE</code> parameter. You can set this to <code>TIMECOND_IFMODSINCE</code> or <code>TIMECOND_ISUNMODSINCE</code>. (HTTP only).</li>
+<li><strong>CURLOPT_TIMEVALUE</strong>: Pass the number of seconds since January 1, 1970. This timestamp is used by <code>CURLOPT_TIMECONDITION</code>.</li>
+</ul>
+<p><strong>The following options expect string values:</strong></p>
+<ul>
+<li><strong>CURLOPT_URL</strong>: The URL you want PHP to fetch. You can also set this when initializing with <code>curl_init()</code>.</li>
+<li><strong>CURLOPT_USERPWD</strong>: A string formatted as <code>[username]:[password]</code> for authentication.</li>
+<li><strong>CURLOPT_PROXYUSERPWD</strong>: A string formatted as <code>[username]:[password]</code> for HTTP proxy authentication.</li>
+<li><strong>CURLOPT_RANGE</strong>: A range of bytes to retrieve, formatted as <code>X-Y</code> (inclusive). cURL also supports multiple intervals separated by commas (e.g., <code>X-Y,N-M</code>).</li>
+<li><strong>CURLOPT_POSTFIELDS</strong>: A string containing the full data to be sent in an HTTP POST request.</li>
+<li><strong>CURLOPT_REFERER</strong>: A string to be sent in the “Referer” header of the HTTP request.</li>
+<li><strong>CURLOPT_USERAGENT</strong>: A string to be sent in the “User-Agent” header of the HTTP request.</li>
+<li><strong>CURLOPT_FTPPORT</strong>: A string containing the IP address to be used by the FTP “PORT” command. This tells the remote server to connect back to our specified IP. This can be an IP address, a hostname, a network interface name, or <code>-</code> to use the system default.</li>
+<li><strong>CURLOPT_COOKIE</strong>: A string containing the cookie header to send with the HTTP request.</li>
+<li><strong>CURLOPT_SSLCERT</strong>: A string containing the path to a PEM-formatted certificate.</li>
+<li><strong>CURLOPT_SSLCERTPASSWD</strong>: A string containing the passphrase required to use the certificate specified by <code>CURLOPT_SSLCERT</code>.</li>
+<li><strong>CURLOPT_COOKIEFILE</strong>: A string containing the path to a file containing cookie data. This file can be in Netscape format or standard HTTP header format.</li>
+<li><strong>CURLOPT_CUSTOMREQUEST</strong>: A custom request method to use instead of GET or HEAD. Make sure your server supports it before using it.</li>
+</ul>
+<p><strong>The following options expect a file resource (returned by <code>fopen()</code>):</strong></p>
+<ul>
+<li><strong>CURLOPT_FILE</strong>: The file where the transfer output should be written. Defaults to STDOUT.</li>
+<li><strong>CURLOPT_INFILE</strong>: The input file for file uploads.</li>
+<li><strong>CURLOPT_WRITEHEADER</strong>: The file where the response header portion should be written.</li>
+<li><strong>CURLOPT_STDERR</strong>: The file to write error messages to instead of stderr.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+              <a href="/tags/%E5%A4%96%E6%8C%82/" rel="tag"># 外挂</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/zh-CN/2008-11-14-xie-le-yi-duan-hen-zui-e-de-dai-ma/" rel="prev" title="写了一段很罪恶的代码">
+                  <i class="fa fa-angle-left"></i> 写了一段很罪恶的代码
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/zh-CN/2008-11-17-php-zhong-sheng-ji-de-explode/" rel="next" title="php中升级的explode">
+                  php中升级的explode <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+  <div class="copyright">
+    &copy; 2005 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">The Cub's Lair: A Engibear's Tale / 小飞熊的窝 - 一头程序员的成长记录</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
